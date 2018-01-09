@@ -1,0 +1,46 @@
+{
+  "name": "capstone",
+  "version": "1.0.0",
+  "description": "### Project Description",
+  "main": "index.js",
+  "engines": {
+    "node": "8.2.1"
+  },
+  "dependencies": {
+    "aphrodite": "^1.2.5",
+    "axios": "^0.17.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17",
+    "bcrypt": "^1.0.3",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
+    "method-override": "^2.3.10",
+    "mocha": "^4.1.0",
+    "nodemon": "^1.14.3",
+    "pg": "^7.4.0",
+    "supertest": "^3.0.0"
+  },
+  "scripts": {
+    "test": "react-scripts test --env=jsdom",
+    "uistart": "react-scripts start",
+    "start": "node server.js",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "cd react-ui && npm install --only=dev && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rmcavin/capStone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rmcavin/capStone/issues"
+  },
+  "homepage": "https://github.com/Rmcavin/capStone#readme"
+}
