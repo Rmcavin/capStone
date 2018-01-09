@@ -15,7 +15,7 @@ let students = require('./routes/students');
 server.use(bodyParser.urlencoded({extended:true}));
 server.use(bodyParser.json());
 server.use(methodOverride('_method'));
-server.use(express.static(path.join(__dirname, '/../react-ui/', 'build')));
+server.use(express.static(path.join(__dirname, 'build')));
 server.set('view engine', 'html');
 
 //routes middleware
