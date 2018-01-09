@@ -24,7 +24,7 @@ server.use('/students', students)
 
 //serve react build
 server.get('/', (req, res) => {
-  res.sendFile('../react-ui/build/index.html')
+  res.sendFile('../build/index.html')
 })
 
 //error catcher
