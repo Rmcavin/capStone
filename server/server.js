@@ -15,8 +15,7 @@ let students = require('./routes/students');
 server.use(bodyParser.urlencoded({extended:true}));
 server.use(bodyParser.json());
 server.use(methodOverride('_method'));
-//server.use(express.static(path.join(__dirname, '/../build')));
-//server.use(express.static(path.join(__dirname, '/../public')))
+server.use(express.static(path.join(__dirname, '/../', 'build')));
 server.set('view engine', 'html');
 
 //routes middleware
@@ -24,8 +23,9 @@ server.use('/teachers', teachers)
 server.use('/students', students)
 
 //serve react build
+console.log(__dirname);
 server.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/../build/index.html'))
+  res.sendFile(path.join(__dirname, '/../','/build/index.html'))
 })
 
 //error catcher
