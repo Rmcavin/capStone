@@ -9,9 +9,7 @@
   "dependencies": {
     "aphrodite": "^1.2.5",
     "axios": "^0.17.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "dotenv": "^4.0.0",
@@ -21,6 +19,9 @@
     "mocha": "^4.1.0",
     "nodemon": "^1.14.3",
     "pg": "^7.4.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17",
     "supertest": "^3.0.0"
   },
   "scripts": {
