@@ -28,7 +28,8 @@
     "uistart": "react-scripts start",
     "start": "node server/server.js",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
