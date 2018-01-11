@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import 'react-table/react-table.css'
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 //components
@@ -10,21 +11,25 @@ import Gradebook from './components/teacherViews/Gradebook';
 class App extends Component {
   constructor(props) {
     super()
-    this.state = {isUser:false, userType:null}
+    this.state = {isUser:false, userType:null, teacherAccess: false, studentAccess: false}
     this.logIn = this.logIn.bind(this)
   }
 
   logIn(update,userType) {
     this.setState({isUser:update, userType:userType})
-  }
+    if (userType === 'teacher') {
+        this.setState({teacherAccess: true})
+      }
+    else if (userType === 'student') {
+        this.setState({studentAccess: true});
+      }
+    }
 
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
 
   render() {
-    let verify = this.state.isUser;
+    let teacherAccess = this.state.teacherAccess;
+    let studentAccess = this.state.studentAccess;
 
     return (
         <BrowserRouter>
@@ -32,8 +37,8 @@ class App extends Component {
             < Nav />
             <Route exact path="/" render={() => <Landing logIn = {this.logIn}/>}/>
             {/*}<Route path ="/gradebook" component= {Gradebook} /> */}
-            <Route path='/gradebook' render={(verify) => (
-              verify ? (
+            <Route path='/gradebook' render={(teacherAccess) => (
+              teacherAccess ? (
                   <Gradebook />
               ) : (
                 <Redirect to='/' />
