@@ -23,7 +23,7 @@ class TeacherLogIn extends Component {
     //log in
     axios({
       method: 'post',
-      url: 'http://localhost:8000/teachers/login',
+      url: '/teachers/login',
       data: {username: username, password: password}
     })
     .then( (res) => {
