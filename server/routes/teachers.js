@@ -2,42 +2,81 @@ const express = require('express');
 const server = express();
 const knex = require('../db/knex');
 const bcrypt = require('bcrypt');
-const saltRounds = 12;
+
+function User(username, hash, firstname, lastname, title) {
+  this.username = username;
+  this.hashpassword = hash;
+  this.firstname = firstname;
+  this.lastname = lastname;
+  this.title = title;
+  this.createdat = new Date();
+}
 
 //get all the teachers
-server.get('/teachers', (req, res) => {
+server.get('/', (req, res) => {
 
 })
 
 //get a particular teacher
-server.get('/teachers/:id', (req, res) => {
-
+server.post('/getUser', (req, res) => {
+  console.log(req.body);
+  knex('teachers')
+    .where({username:req.body.username})
+    .first()
+    .then( (user) => {
+      if (user === undefined || user === null) {
+        res.send('User not found.')
+      } else {
+        console.log(user);
+        res.send(user);
+      }
+    })
 })
 
 //register new teachers
-server.post('/teachers/register', (req, res) => {
-  (req, res) => {
-    let username = req.body.teacherUserName;
-    let firstName = req.body.firstName;
-    let lastName = req.body.lastName;
+server.post('/register', (req, res) => {
+    let username = req.body.username;
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
     let title = req.body.title;
-    bcrypt.hash(req.body.teacherPassWord, saltRounds, (err, hash) => {
-      let user = new User({username:username, password:hash, firstName:firstName, lastName:lastName, title:title});
+    console.log(req.body);
+    bcrypt.hash(req.body.password, 12, (err, hash) => {
+      let user = new User(username, hash, firstname, lastname, title);
       knex('teachers')
-        insert(user)
+        .insert(user)
+        .returning('*')
         .then((teachers) => {
-          res.json(teachers[0])
+          console.log(teachers);
+          res.send(teachers)
         })
         .catch( (err) => {
-          next(err);
+          console.error(err)
+          res.send('invalid registration');
         });
     })
-  }
 })
 
 //log in a teachers
-server.post('/teachers/login', (req, res) => {
-
+server.post('/login', (req, res) => {
+  knex('teachers')
+    .where('username', req.body.username)
+    .first()
+    .then((user) => {
+      if (user === undefined || user === null) {
+        res.send('User not found.')
+      } else {
+        bcrypt.compare(req.body.password, user.hashpassword, (err, success) => {
+          if (success) {
+            res.send(user)
+          } else {
+            res.send('invalid login credentials')
+          }
+        }
+      )}
+    })
+    .catch( (err) => {
+      console.error(err)
+    })
 })
 
 module.exports = server;

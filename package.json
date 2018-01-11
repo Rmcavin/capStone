@@ -2,7 +2,7 @@
   "name": "capstone",
   "version": "1.0.0",
   "description": "### Project Description",
-  "main": "index.js",
+  "main": "server/server.js",
   "engines": {
     "node": "8.2.1"
   },
@@ -21,6 +21,8 @@
     "pg": "^7.4.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "supertest": "^3.0.0"
   },

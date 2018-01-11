@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
 //components
-import AuthView from './AuthView'
+import TeacherLogIn from './teacherLogIn'
+import TeacherSignUp from './teacherSignUp'
+import StudentLogIn from './studentLogIn'
+import StudentSignUp from './studentSignUp'
 
 class Landing extends Component {
   constructor(props) {
     super(props)
-
     this.state = {userType:'teacher',
                   userAction:'logIn',
                   user:null
@@ -27,14 +29,29 @@ class Landing extends Component {
     this.setState({userAction:action})
   }
 
-
-
-  componentDidUpdate() {
-    console.log(this.state);
-  }
+  // determineView(type, action) {
+  //   let form = null;
+  //   console.log(type, action);
+  //   console.log(TeacherLogIn);
+  //   if (action === 'logIn' && type === 'teacher') {
+  //     form = <TeacherLogIn logIn={this.props.logIn}/>;
+  //   }
+  //   else if (action === 'logIn' && type === 'student') {
+  //     form = <StudentLogIn logIn={this.props.logIn}/>
+  //   }
+  //   else if (action === 'signUp' && type === 'teacher') {
+  //     form = <TeacherSignUp logIn={this.props.logIn}/>
+  //   }
+  //   else if (action === 'signUp' && type === 'student') {
+  //     return (
+  //       form = <StudentSignUp />
+  //     )
+  //   }
+  //   return form;
+  // }
 
   render() {
-
+    console.log(this.props.logIn);
     //styles
     const styles = StyleSheet.create({
       section : {
@@ -66,8 +83,20 @@ class Landing extends Component {
           padding: 20,
         }
       }
-
     });
+    let form;
+    if (this.state.userAction === 'logIn' && this.state.userType === 'teacher') {
+      form = <TeacherLogIn logIn={this.props.logIn}/>;
+    }
+    else if (this.state.userAction === 'logIn' && this.state.userType === 'student') {
+      form = <StudentLogIn logIn={this.props.logIn}/>
+    }
+    else if (this.state.userAction === 'signUp' && this.state.userType === 'teacher') {
+      form = <TeacherSignUp logIn={this.props.logIn}/>
+    }
+    else if (this.state.userAction === 'signUp' && this.state.userType === 'student') {
+        form = <StudentSignUp />
+    }
 
     return (
       <section className='SignIn' className={css(styles.section, styles.sectionSmall)}>
@@ -82,9 +111,7 @@ class Landing extends Component {
             <button type="button" className={css(styles.button)} id="teacher" onClick={ () => this.typeOfUser('teacher') }>Teacher</button>
             <button type="button" className={css(styles.button)} id="student" onClick={ () => this.typeOfUser('student') }>Student</button>
           </div>
-
-          <AuthView userType={this.state.userType} userAction={this.state.userAction} />
-
+          {form}
         </div>
       </section>
     )

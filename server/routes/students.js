@@ -1,6 +1,33 @@
 const express = require('express');
 const server = express();
 const knex = require('../db/knex');
+const bcrypt = require('bcrypt');
+
+
+server.post('/login', (req, res) => {
+  bcrypt.hash(req.body.password, 12, (err,hash) => {
+    console.log('this is the pw',hash);
+  });
+  knex('students')
+    .where('username', req.body.username)
+    .first()
+    .then((user) => {
+      if (user === undefined || user === null) {
+        res.send('User not found.')
+      } else {
+        bcrypt.compare(req.body.password, user.hashpassword, (err, success) => {
+          if (success) {
+            res.send(user)
+          } else {
+            res.send('invalid login credentials')
+          }
+        }
+      )}
+    })
+    .catch( (err) => {
+      console.error(err)
+    })
+  })
 
 
 module.exports = server;

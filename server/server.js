@@ -15,17 +15,24 @@ let students = require('./routes/students');
 server.use(bodyParser.urlencoded({extended:true}));
 server.use(bodyParser.json());
 server.use(methodOverride('_method'));
-server.use(express.static(path.join(__dirname, '/../', 'build')));
 server.set('view engine', 'html');
 
-//routes middleware
+//allow CORS
+
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+// routes middleware
 server.use('/teachers', teachers)
 server.use('/students', students)
 
-//serve react build
-console.log(__dirname);
+// serve react build
+server.use(express.static(path.join(__dirname, '/../', 'build')));
 server.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/../','/build/index.html'))
+  res.sendFile(path.join(__dirname, '/../','/build/home.html'))
 })
 
 //error catcher
