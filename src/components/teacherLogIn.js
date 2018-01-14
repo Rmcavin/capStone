@@ -27,9 +27,10 @@ class TeacherLogIn extends Component {
       data: {username: username, password: password}
     })
     .then( (res) => {
+      console.log('log in',res.data);
       if (res.data !== 'invalid login credentials' && res.data !== 'User not found.' ) {
         this.setState({user:res.data, error: ''})
-        this.props.logIn(true,'teacher')
+        this.props.logIn(res.data, true,'teacher')
       } else {
         this.setState({error: res.data, teacherUserName: null, teacherPassWord: null})
       }
