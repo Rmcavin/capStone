@@ -5,9 +5,6 @@ const bcrypt = require('bcrypt');
 
 
 server.post('/login', (req, res) => {
-  bcrypt.hash(req.body.password, 12, (err,hash) => {
-    console.log('this is the pw',hash);
-  });
   knex('students')
     .where('username', req.body.username)
     .first()
@@ -29,5 +26,17 @@ server.post('/login', (req, res) => {
     })
   })
 
+  server.post('/new', (req, res) => {
+    bcrypt.hash(req.body.password, 12, (err,hash) => {
+    knex('students')
+      .insert({
+        username:req.body.username,
+        password:hash,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        grade: req.body.grade,
+        createdat: new Date()})
+      });
+  })
 
 module.exports = server;

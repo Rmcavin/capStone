@@ -86,11 +86,11 @@ exports.seed = function(knex, Promise) {
         {id: 55, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 10, assignment_id: 4, class_id: 11},
 
         //c12
-        {id: 56, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 11, assignment_id: 3, class_id: 12},
-        {id: 57, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 12, assignment_id: 3, class_id: 12},
-        {id: 58, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 13, assignment_id: 3, class_id: 12},
-        {id: 59, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 14, assignment_id: 3, class_id: 12},
-        {id: 60, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 15, assignment_id: 3, class_id: 12},
+        {id: 56, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 11, assignment_id: 4, class_id: 12},
+        {id: 57, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 12, assignment_id: 4, class_id: 12},
+        {id: 58, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 13, assignment_id: 4, class_id: 12},
+        {id: 59, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 14, assignment_id: 4, class_id: 12},
+        {id: 60, createdat: new Date(), score: Math.floor(Math.random()*100), due_date: new Date(2018, 0, 10), submit_date: new Date(2018, 0, 10), student_id: 15, assignment_id: 4, class_id: 12},
 
         //assignment 5
         //c4

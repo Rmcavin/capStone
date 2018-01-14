@@ -8,19 +8,27 @@ class Datatable extends Component {
   constructor(props, context) {
     super(props, context)
 
+    this.getData = this.getData.bind(this);
+    this.sendData = this.sendData.bind(this);
     this.renderEditable = this.renderEditable.bind(this);
-    this.state = {currentClass: null, data:null, columns: null};
+    this.state = {data:null, columns: null, key: null};
   }
 
-  //ajax calls here
-  componentDidMount() {
-    if (this.state.currentClass !== this.props.currentClass) {
-      this.setState({user: this.props.user, currentClass:this.props.currentClass})
-    }
-  }
+  // //ajax calls here
+  // componentDidMount() {
+  //   if (this.state.currentClass !== this.props.currentClass) {
+  //     this.setState({user: this.props.user, currentClass:this.props.currentClass})
+  //   }
+  // }
 
   componentDidUpdate() {
-    console.log(this.state);
+    console.log('datatable state', this.state);
+  }
+
+  componentWillReceiveProps(nextprops) {
+    if (nextprops.currentClass) {
+      this.getData(nextprops.currentClass)
+    }
   }
 
   renderEditable(cellInfo) {
@@ -31,7 +39,14 @@ class Datatable extends Component {
         suppressContentEditableWarning
         onBlur={e => {
           const data = [...this.state.data];
-          data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+          data[cellInfo.index][cellInfo.column.id] = parseInt(e.target.innerHTML);
+          let cellUpdate = {
+            student_id: cellInfo.original.studentId,
+            assignment_id: this.state.key[cellInfo.column.id],
+            score: cellInfo.original[cellInfo.column.id]
+          }
+          console.log('the cell update', cellUpdate);
+          this.sendData(cellUpdate)
           this.setState({ data });
         }}
         dangerouslySetInnerHTML={{
@@ -39,6 +54,32 @@ class Datatable extends Component {
         }}
       />
     );
+  }
+
+  getData(currentClassID) {
+    axios({
+      method: 'get',
+      url: `/teachers/${this.props.user.id}/classes/${currentClassID}/assignments`
+    })
+    .then( (res) => {
+      res.data.columns.forEach( (el) => {
+        if (el.Header !== 'name') {
+          el.Cell = this.renderEditable
+        }
+      })
+      this.setState({columns: res.data.columns, data: res.data.grades, key: res.data.key})
+    })
+  }
+
+  sendData(updates) {
+    axios({
+      method: 'patch',
+      url: '/grades',
+      data: updates
+    })
+    .then ( (res) => {
+      console.log(res);
+    })
   }
 
   render() {
@@ -63,21 +104,12 @@ class Datatable extends Component {
     if (currentClassID && !data) {
       //get the data
       console.log('making axios call for data');
-      axios({
-        method: 'get',
-        url: `/teachers/${this.props.user.id}/classes/${currentClassID}/assignments`
-      })
-      .then( (res) => {
-        console.log('data table api result',res);
-        res.data.columns.forEach( (el) => {
-          el.Cell = this.renderEditable
-        })
-        this.setState({columns: res.data.columns, data: res.data.grades})
-      })
-      //display loader until data returns
+      this.getData(currentClassID)
+
       return <div className={css(styles.loaderContainer)}><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
               <span className="sr-only">Loading...</span></div>
     }
+
 
       //data return
       if (this.state.data) {

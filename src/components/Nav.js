@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import {Link} from 'react-router-dom';
 
 class Nav extends Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class Nav extends Component {
 
     this.state = {menuOpen: false};
     this.menuToggle = this.menuToggle.bind(this)
+    this.determineMenu = this.determineMenu.bind(this)
   }
 
   menuToggle(styles) {
@@ -18,7 +20,39 @@ class Nav extends Component {
     //console.log(this.state);
   }
 
+  determineMenu(styles) {
+    console.log('did this ever even get called?!');
+    if (this.props.isUser) {
+      console.log('is there a user?');
+      if (this.props.userType === 'teacher') {
+        console.log('is it a teacher?');
+        return (
+          <div className = {css(this.state.menuOpen ? styles.open : styles.closed, styles.dropDownContent )}>
+            <Link to="/gradebook" className={css(styles.dropDownLink)}>Manage Grades</Link>
+            <Link to="/classes" className={css(styles.dropDownLink)}>Manage Classes</Link>
+            <Link to="/assignments" className={css(styles.dropDownLink)}>Manage Assignments</Link>
+            <Link to="/" className={css(styles.dropDownLink)} onClick={this.props.logOut}>Log Out</Link>
+          </div>
+        )
+      }
+      if (this.props.userType === 'student') {
+        return (
+          <div className = {css(this.state.menuOpen ? styles.open : styles.closed, styles.dropDownContent )}>
+            "student links in progress"
+          </div>
+        )
+      }
+    } else {
+      return (
+        <div className = {css(this.state.menuOpen ? styles.open : styles.closed, styles.dropDownContent )}>
+          <Link to="/" className={css(styles.dropDownLink)} >Log In</Link>
+        </div>
+      )
+    }
+  }
+
   render() {
+    console.log('nav props', this.props);
     //styles
     const styles = StyleSheet.create({
       navBar : {
@@ -88,17 +122,17 @@ class Nav extends Component {
         '@media (min-width: 768px)': {
           display: 'inline'
         },
+        'hover:' : {
+          color: 'steelblue'
+        },
         color: 'white',
         padding: 10,
         textDecoration: 'none',
         display: 'block'
       },
-      DropDownLinkhover : {
-        'hover:' : {
-          color: 'steelblue'
-      }
-      }
     });
+
+    let menuOptions = this.determineMenu(styles);
 
     return (
       <nav className = {css(styles.navBar)}>
@@ -108,12 +142,12 @@ class Nav extends Component {
             <i className ='fa fa-bars'aria-hidden="true">
             </i>
           </button>
-          <div className = {css(this.state.menuOpen ? styles.open : styles.closed, styles.dropDownContent )}>
-            <a href='#' className = {css(styles.dropDownLink, styles.DropDownLinkhover)}>Sample 1</a>
+
+            {/*<a href='#' className = {css(styles.dropDownLink, styles.DropDownLinkhover)}>Sample 1</a>
             <a href='#' className = {css(styles.dropDownLink, styles.DropDownLinkhover)}>Sample 2</a>
-            <a href='#' className = {css(styles.dropDownLink, styles.DropDownLinkhover)}>Sample 3</a>
+            <a href='#' className = {css(styles.dropDownLink, styles.DropDownLinkhover)}>Sample 3</a> */}
+            {menuOptions}
           </div>
-        </div>
       </nav>
     )
   }

@@ -7,15 +7,18 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import Nav from './components/Nav'
 import Landing from './components/Landing'
 import Gradebook from './components/teacherViews/Gradebook';
+import Classes from './components/teacherViews/Classes'
+import Assignments from './components/teacherViews/Assignments'
 
 class App extends Component {
   constructor(props) {
     super()
     this.state = {user:null, isUser:false, userType:null, teacherAccess: false, studentAccess: false}
     this.logIn = this.logIn.bind(this)
+    this.logOut = this.logOut.bind(this)
   }
 
-  logIn(user, update,userType) {
+  logIn(user,update,userType) {
     this.setState({user:user, isUser:update, userType:userType})
     if (userType === 'teacher') {
         this.setState({teacherAccess: true})
@@ -23,6 +26,10 @@ class App extends Component {
     else if (userType === 'student') {
         this.setState({studentAccess: true});
       }
+    }
+
+    logOut() {
+      this.setState({user:null, isUser:null, userType:null, teacherAccess: false, studentAccess: false})
     }
 
     componentDidUpdate() {
@@ -37,9 +44,9 @@ class App extends Component {
     return (
         <BrowserRouter>
           <div className="App">
-            < Nav />
+            < Nav isUser = {this.state.isUser} userType = {this.state.userType} logOut = {this.logOut}/>
             <Route exact path="/" render={() => <Landing logIn = {this.logIn}/>}/>
-            {/*}<Route path ="/gradebook" component= {Gradebook} /> */}
+            {/*conditional routing to gradebook*/}
             <Route path='/gradebook' render={(teacherAccess) => (
               teacherAccess ? (
                   <Gradebook user={this.state.user}/>
@@ -47,8 +54,22 @@ class App extends Component {
                 <Redirect to='/' />
               )
             )} />
-
-
+            {/*conditional routing to class management*/}
+            <Route path='/classes' render={(teacherAccess) => (
+              teacherAccess ? (
+                  <Classes user={this.state.user}/>
+              ) : (
+                <Redirect to='/' />
+              )
+            )} />
+            {/*conditional routing to assignment management*/}
+            <Route path='/assignments' render={(teacherAccess) => (
+              teacherAccess ? (
+                  <Assignments user={this.state.user}/>
+              ) : (
+                <Redirect to='/' />
+              )
+            )} />
           </div>
         </BrowserRouter>
     );

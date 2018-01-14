@@ -14,7 +14,7 @@ function User(username, hash, firstname, lastname, title) {
 
 //get all the teachers
 server.get('/', (req, res) => {
-
+  //not necessary at this point
 })
 
 //register new teachers
@@ -30,9 +30,8 @@ server.post('/register', (req, res) => {
       knex('teachers')
         .insert(user)
         .returning('*')
-        .then((teachers) => {
-          console.log(teachers);
-          res.send(teachers)
+        .then((teacher) => {
+          res.send(teacher)
         })
         .catch( (err) => {
           console.error(err)
@@ -43,7 +42,6 @@ server.post('/register', (req, res) => {
 
 //log in a teachers
 server.post('/login', (req, res) => {
-  console.log('am I in here?');
   knex('teachers')
     .where('username', req.body.username)
     .first()
@@ -53,7 +51,6 @@ server.post('/login', (req, res) => {
       } else {
         bcrypt.compare(req.body.password, user.hashpassword, (err, success) => {
           if (success) {
-            console.log('success');
             res.send(user)
           } else {
             res.send('invalid login credentials')
@@ -112,8 +109,8 @@ server.get('/:id/classes', (req, res) => {
         .then( (studentGrades) => {
           let gradeData = processData(studentGrades);
           let columns = getColumns(studentGrades);
-          let result = {columns: columns, grades: gradeData};
-          console.log(result);
+          let key = assignmentKey(studentGrades);
+          let result = {columns: columns, grades: gradeData, key: key};
           res.send(result)
         })
       .catch( (err) => {
@@ -122,43 +119,38 @@ server.get('/:id/classes', (req, res) => {
   })
 
   function processData(grades) {
+    console.log('hi?');
     let processedData = [];
     let entry = {}
     count = grades.length;
     grades.forEach( (el) => {
       let fullName = `${el.firstname} ${el.lastname}`
       //if there is no fullname, set it
-
       if (!entry.name) {
         entry.name = fullName
-        console.log('hello?');
+        entry.studentId = el.student_id;
       }
       if (entry.name !== fullName) {
-        console.log('hello?');
         processedData.push(entry)
         entry = {}
         entry.name = fullName;
-      }
-      else if (!entry.name) {
-        console.log('hey?');
-
+        entry.studentId = el.student_id;
       }
       entry[el.assignmentname] = el.score;
-      console.log(entry);
       count -= 1;
+      //if this is the last entry push it now
       if (count === 0) {
         processedData.push(entry)
       }
     })
+    console.log('done');
     return processedData;
   }
 
   function getColumns(grades) {
-    console.log('in function');
+    console.log('hey?');
     let columnnames = ['name']
     let columns = [];
-
-
     grades.forEach( (el) => {
       if (columnnames.indexOf(el.assignmentname) === -1) {
         columnnames.push(el.assignmentname)
@@ -167,7 +159,20 @@ server.get('/:id/classes', (req, res) => {
     columnnames.forEach( (el) => {
       columns.push({Header: el, accessor: el})
     })
+    console.log('done');
     return columns;
+  }
+
+  function assignmentKey(grades) {
+    console.log('hello?');
+    let assignmentMap = {};
+    grades.forEach( (el) => {
+      if (!assignmentMap.hasOwnProperty(el.assignmentname)) {
+        console.log(el);
+        assignmentMap[el.assignmentname] = el.assignment_id;
+      }
+    })
+    return assignmentMap;
   }
 
 

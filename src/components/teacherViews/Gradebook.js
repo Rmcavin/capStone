@@ -5,6 +5,7 @@ import axios from 'axios';
 
 //components
 import Datatable from './Datatable'
+import AddStudent from './AddStudent'
 
 class Gradebook extends Component {
   constructor(props) {
@@ -20,14 +21,12 @@ class Gradebook extends Component {
   }
 
   getData() {
-    console.log('getdata');
     if (this.state.user && !this.state.classes) {
       axios({
         method: 'get',
         url: `/teachers/${this.state.user.id}/classes`
       })
       .then( (res) => {
-        console.log('api data',res.data)
         this.setState({classes: res.data})
       })
     }
@@ -104,12 +103,6 @@ class Gradebook extends Component {
               {options}
             </select>
           </form>
-          <div>
-            <button className = {css(styles.toolButton)} ><i className="fa fa-user-plus" aria-hidden="true"></i></button>
-            <button className = {css(styles.toolButton)} ><i className="fa fa-users" aria-hidden="true"></i></button>
-            <button className = {css(styles.toolButton)} ><i className="fa fa-file-text-o" aria-hidden="true"></i></button>
-            <button className = {css(styles.toolButton)} ><i className="fa fa-files-o" aria-hidden="true"></i></button>
-          </div>
         </div>
         <Datatable user={this.state.user} currentClass={this.state.currentClass}/>
       </section>

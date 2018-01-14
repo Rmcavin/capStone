@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 8000;
 //bring in route modules
 let teachers = require('./routes/teachers');
 let students = require('./routes/students');
+let grades = require('./routes/grades')
 
 //set up middleware
 server.use(bodyParser.urlencoded({extended:true}));
@@ -28,6 +29,7 @@ server.use(function(req, res, next) {
 // routes middleware
 server.use('/teachers', teachers)
 server.use('/students', students)
+server.use('/grades', grades)
 
 // serve react build
 server.use(express.static(path.join(__dirname, '/../', 'build')));
