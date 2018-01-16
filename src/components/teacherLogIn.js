@@ -86,7 +86,7 @@ class TeacherLogIn extends Component {
         <label className={css(styles.label)}>Teacher Username: </label>
         <input type='text' name='teacherUserName' onChange={this.handleChange} className={css(styles.input)} />
         <label className={css(styles.label)}>Teacher Password: </label>
-        <input type='text' name='teacherPassWord' onChange={this.handleChange} className={css(styles.input)} />
+        <input type='password' name='teacherPassWord' onChange={this.handleChange} className={css(styles.input)} />
         <input type='submit' className={css(styles.submit)} />
         <div className={css(styles.error)}>{this.state.error}</div>
       </form>

@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('teachers', (table) => {
-    table.increments('id').unsigned().primary();
+    table.increments('id').unsigned().primary().unique();
     table.dateTime('createdat').notNull();
     table.dateTime('updatedat').nullable();
     table.dateTime('deletedat').nullable();

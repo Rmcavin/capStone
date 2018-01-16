@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom';
 import ReactTable from 'react-table'
 import axios from 'axios';
 
-class Datatable extends Component {
+class Gradetable extends Component {
   constructor(props, context) {
     super(props, context)
 
@@ -13,13 +13,6 @@ class Datatable extends Component {
     this.renderEditable = this.renderEditable.bind(this);
     this.state = {data:null, columns: null, key: null};
   }
-
-  // //ajax calls here
-  // componentDidMount() {
-  //   if (this.state.currentClass !== this.props.currentClass) {
-  //     this.setState({user: this.props.user, currentClass:this.props.currentClass})
-  //   }
-  // }
 
   componentDidUpdate() {
     console.log('datatable state', this.state);
@@ -130,4 +123,4 @@ class Datatable extends Component {
   }
 }
 
-export default Datatable;
+export default Gradetable;

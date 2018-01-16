@@ -29,29 +29,7 @@ class Landing extends Component {
     this.setState({userAction:action})
   }
 
-  // determineView(type, action) {
-  //   let form = null;
-  //   console.log(type, action);
-  //   console.log(TeacherLogIn);
-  //   if (action === 'logIn' && type === 'teacher') {
-  //     form = <TeacherLogIn logIn={this.props.logIn}/>;
-  //   }
-  //   else if (action === 'logIn' && type === 'student') {
-  //     form = <StudentLogIn logIn={this.props.logIn}/>
-  //   }
-  //   else if (action === 'signUp' && type === 'teacher') {
-  //     form = <TeacherSignUp logIn={this.props.logIn}/>
-  //   }
-  //   else if (action === 'signUp' && type === 'student') {
-  //     return (
-  //       form = <StudentSignUp />
-  //     )
-  //   }
-  //   return form;
-  // }
-
   render() {
-    console.log(this.props.logIn);
     //styles
     const styles = StyleSheet.create({
       section : {

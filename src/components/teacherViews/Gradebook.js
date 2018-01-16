@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 //components
-import Datatable from './Datatable'
+import Gradetable from './Gradetable'
 import AddStudent from './AddStudent'
 
 class Gradebook extends Component {
@@ -15,16 +15,16 @@ class Gradebook extends Component {
   }
 
   componentWillReceiveProps(nextprops) {
-    if (this.state.user !== nextprops.user) {
-      this.setState({user:nextprops.user})
-    }
+    // if (this.state.user !== nextprops.user) {
+    //   this.setState({user:nextprops.user})
+    // }
   }
 
   getData() {
-    if (this.state.user && !this.state.classes) {
+    if (this.props.user && !this.state.classes) {
       axios({
         method: 'get',
-        url: `/teachers/${this.state.user.id}/classes`
+        url: `/teachers/${this.props.user.id}/classes`
       })
       .then( (res) => {
         this.setState({classes: res.data})
@@ -33,7 +33,7 @@ class Gradebook extends Component {
   }
 
   componentDidUpdate() {
-    console.log('updated gradebook state',this.state);
+    //console.log('updated gradebook state',this.state);
   }
 
   createOptions() {
@@ -45,13 +45,11 @@ class Gradebook extends Component {
   }
 
   selectClass(event) {
-    console.log(event);
-    console.log('the event value', event.target.value);
     this.setState({currentClass: event.target.value});
   }
 
   render() {
-    if (this.state.user && this.state.classes === null) {
+    if (this.props.user && this.state.classes === null) {
       this.getData()
     }
     let options = this.state.classes ? (this.createOptions()) : (null);
@@ -104,7 +102,7 @@ class Gradebook extends Component {
             </select>
           </form>
         </div>
-        <Datatable user={this.state.user} currentClass={this.state.currentClass}/>
+        <Gradetable user={this.props.user} currentClass={this.state.currentClass}/>
       </section>
     )
   }

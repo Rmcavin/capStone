@@ -6,6 +6,18 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 const path = require('path');
 const PORT = process.env.PORT || 8000;
+const firebase = require('firebase')
+
+//initialize firebase
+let config = {
+    apiKey: process.env.apiKey,
+    authDomain: process.env.authDomain,
+    databaseURL: process.env.databaseURL,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.messagingSenderId
+  };
+  firebase.initializeApp(config);
 
 //bring in route modules
 let teachers = require('./routes/teachers');

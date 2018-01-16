@@ -94,7 +94,7 @@ class TeacherSignUp extends Component {
         <label className={css(styles.label)}>Teacher Username: </label>
         <input type='text' name='teacherUserName'  onChange={this.handleChange} className={css(styles.input)} />
         <label className={css(styles.label)}>Teacher Password: </label>
-        <input type='text' name='teacherPassWord'  onChange={this.handleChange} className={css(styles.input)} />
+        <input type='password' name='teacherPassWord'  onChange={this.handleChange} className={css(styles.input)} />
         <label className={css(styles.label)}>Teacher Title: </label>
         <select name='teacherTitle' value={this.state.teacherTitle} onChange={this.handleChange} className={css(styles.select)}>
           <option value="none"></option>

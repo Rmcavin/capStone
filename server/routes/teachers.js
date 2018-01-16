@@ -19,12 +19,10 @@ server.get('/', (req, res) => {
 
 //register new teachers
 server.post('/register', (req, res) => {
-  console.log('registration');
     let username = req.body.username;
     let firstname = req.body.firstname;
     let lastname = req.body.lastname;
     let title = req.body.title;
-    console.log(req.body);
     bcrypt.hash(req.body.password, 12, (err, hash) => {
       let user = new User(username, hash, firstname, lastname, title);
       knex('teachers')
@@ -72,7 +70,6 @@ server.post('/:id', (req, res) => {
       if (user === undefined || user === null) {
         res.send('User not found.')
       } else {
-        console.log(user);
         res.send(user);
       }
     })
@@ -107,7 +104,7 @@ server.get('/:id/classes', (req, res) => {
         .innerJoin('assignments', 'grades.assignment_id', 'assignments.id')
         .innerJoin('students', 'grades.student_id', 'students.id')
         .then( (studentGrades) => {
-          let gradeData = processData(studentGrades);
+          let gradeData = processGrades(studentGrades);
           let columns = getColumns(studentGrades);
           let key = assignmentKey(studentGrades);
           let result = {columns: columns, grades: gradeData, key: key};
@@ -118,8 +115,50 @@ server.get('/:id/classes', (req, res) => {
       })
   })
 
-  function processData(grades) {
-    console.log('hi?');
+  //get students for a class
+  server.get('/:id/classes/:classid/students', (req, res) => {
+    let classid = req.params.classid;
+      knex('classes')
+        .where({'classes.id':classid})
+        .innerJoin('students_class', 'classes.id', 'students_class.class_id')
+        .innerJoin('students', 'students_class.student_id', 'students.id')
+        .then( (roster) => {
+          let rosterData = processRoster(roster)
+          let columns = [{Header: 'Name', accessor: 'name'}, {Header: 'Grade', accessor: 'grade'}, {Header: 'Username', accessor: 'username'}, {Header: 'Update Password', accessor: 'password'}];
+          let result = {columns:columns, rosterData:rosterData};
+          res.send(result)
+        })
+      .catch( (err) => {
+        res.send(err)
+      })
+  })
+
+  //get assignments for a teacher
+  server.get('/:id/assignments', (req, res) => {
+    let teacherid = req.params.id
+  })
+
+  //============================ ROSTER PROCESSESING
+
+  function processRoster(roster) {
+    console.log(roster);
+    let processedData = [];
+    let entry = {};
+    roster.forEach( (el) => {
+      entry.name = `${el.firstname} ${el.lastname}`;
+      entry.grade = el.grade;
+      entry.username = el.username;
+      entry.password = '';
+      entry.student_id = el.student_id;
+      processedData.push(entry)
+      entry = {};
+    })
+    return processedData;
+  }
+
+  //============================ GRADES PROCESSESING
+
+  function processGrades(grades) {
     let processedData = [];
     let entry = {}
     count = grades.length;
@@ -143,12 +182,10 @@ server.get('/:id/classes', (req, res) => {
         processedData.push(entry)
       }
     })
-    console.log('done');
     return processedData;
   }
 
   function getColumns(grades) {
-    console.log('hey?');
     let columnnames = ['name']
     let columns = [];
     grades.forEach( (el) => {
@@ -159,12 +196,11 @@ server.get('/:id/classes', (req, res) => {
     columnnames.forEach( (el) => {
       columns.push({Header: el, accessor: el})
     })
-    console.log('done');
+    console.log(columns);
     return columns;
   }
 
   function assignmentKey(grades) {
-    console.log('hello?');
     let assignmentMap = {};
     grades.forEach( (el) => {
       if (!assignmentMap.hasOwnProperty(el.assignmentname)) {

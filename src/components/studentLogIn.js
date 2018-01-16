@@ -81,7 +81,7 @@ class StudentLogIn extends Component {
         <label className={css(styles.label)}>Student Username: </label>
         <input type='text' name='studentUserName'  onChange={this.handleChange} className={css(styles.input)} />
         <label className={css(styles.label)}>Student Password: </label>
-        <input type='text' name='studentPassWord' onChange={this.handleChange} className={css(styles.input)} />
+        <input type='password' name='studentPassWord' onChange={this.handleChange} className={css(styles.input)} />
         <input type='submit' className={css(styles.submit)} />
         <div className={css(styles.error)}>{this.state.error}</div>
       </form>

@@ -21,11 +21,8 @@ class Nav extends Component {
   }
 
   determineMenu(styles) {
-    console.log('did this ever even get called?!');
     if (this.props.isUser) {
-      console.log('is there a user?');
       if (this.props.userType === 'teacher') {
-        console.log('is it a teacher?');
         return (
           <div className = {css(this.state.menuOpen ? styles.open : styles.closed, styles.dropDownContent )}>
             <Link to="/gradebook" className={css(styles.dropDownLink)}>Manage Grades</Link>
@@ -52,7 +49,6 @@ class Nav extends Component {
   }
 
   render() {
-    console.log('nav props', this.props);
     //styles
     const styles = StyleSheet.create({
       navBar : {
@@ -142,10 +138,6 @@ class Nav extends Component {
             <i className ='fa fa-bars'aria-hidden="true">
             </i>
           </button>
-
-            {/*<a href='#' className = {css(styles.dropDownLink, styles.DropDownLinkhover)}>Sample 1</a>
-            <a href='#' className = {css(styles.dropDownLink, styles.DropDownLinkhover)}>Sample 2</a>
-            <a href='#' className = {css(styles.dropDownLink, styles.DropDownLinkhover)}>Sample 3</a> */}
             {menuOptions}
           </div>
       </nav>
