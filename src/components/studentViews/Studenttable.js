@@ -54,6 +54,7 @@ class Studenttable extends Component {
       url: `/students/${this.props.user.id}/classes/${currentClassID}/assignments`
     })
     .then( (res) => {
+      console.log('data from db', res);
       // res.data.columns.forEach( (el) => {
       //   if (el.Header !== 'name') {
       //     el.Cell = this.renderEditable

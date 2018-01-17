@@ -80,13 +80,15 @@ server.post('/login', (req, res) => {
 
   //get the students grades in a class
   server.get('/:id/classes/:classid/assignments', (req, res) => {
+    console.log('hello???');
     knex('grades')
-      .select('*')
       .where({'class_id':req.params.classid})
+      .andWhere({'student_id':req.params.id})
       .innerJoin('assignments', 'grades.assignment_id', 'assignments.id')
-      .innerJoin('students', 'grades.student_id', req.params.id)
+      //.innerJoin('students', 'grades.student_id', req.params.id)
       .then((grades) => {
-        console.log(grades);
+        let result = processGrades(grades)
+        res.send(result)
       })
   })
 
@@ -116,5 +118,22 @@ server.post('/login', (req, res) => {
       })
     })
   })
+
+  function processGrades(grades) {
+    console.log('raw grades', grades);
+    let result = {columns:[{Header:'Assignment', accessor:'assignment'}, {Header:'Score', accessor:'score'}]};
+    let processedData = [];
+    let entry = {};
+    grades.forEach( (el) => {
+      entry.assignment = el.assignmentname;
+      entry.assignmentid = el.assignment_id;
+      entry.score = el.score;
+      entry.type = el.type;
+      processedData.push(entry);
+      entry = {};
+    })
+    result.grades = processedData;
+    return result;
+  }
 
 module.exports = server;
