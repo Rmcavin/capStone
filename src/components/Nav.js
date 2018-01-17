@@ -35,7 +35,8 @@ class Nav extends Component {
       if (this.props.userType === 'student') {
         return (
           <div className = {css(this.state.menuOpen ? styles.open : styles.closed, styles.dropDownContent )}>
-            "student links in progress"
+          <Link to="/dashboard" className={css(styles.dropDownLink)}>Dashboard</Link>
+          <Link to="/" className={css(styles.dropDownLink)} onClick={this.props.logOut}>Log Out</Link>
           </div>
         )
       }

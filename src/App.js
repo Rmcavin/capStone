@@ -9,6 +9,7 @@ import Landing from './components/Landing'
 import Gradebook from './components/teacherViews/Gradebook';
 import Roster from './components/teacherViews/Roster'
 import Assignments from './components/teacherViews/Assignments'
+import Dashboard from './components/studentViews/Dashboard'
 
 class App extends Component {
   constructor(props) {
@@ -66,6 +67,14 @@ class App extends Component {
             <Route path='/assignments' render={(teacherAccess) => (
               teacherAccess ? (
                   <Assignments user={this.state.user}/>
+              ) : (
+                <Redirect to='/' />
+              )
+            )} />
+
+            <Route path='/dashboard' render={(studentAccess) => (
+              studentAccess ? (
+                  <Dashboard user={this.state.user}/>
               ) : (
                 <Redirect to='/' />
               )

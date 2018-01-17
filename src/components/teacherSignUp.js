@@ -32,6 +32,7 @@ class TeacherSignUp extends Component {
       console.log(res);
       if (res.data != 'incorrect input information' && res.data != 'invalid registration') {
         this.setState({user:res.data, error: ''})
+        this.props.logIn(res.data, true,'teacher')
       } else {
         this.setState({error: 'Invalid registration', teacherUserName: null, teacherPassWord: null, teacherFirstName: null, teacherLastName: null, teacherTitle: 'none'})
       }
@@ -47,10 +48,7 @@ class TeacherSignUp extends Component {
 
   render() {
     if (this.state.user) {
-      return <Redirect from='/' to={{
-        pathname:'gradebook',
-        state: {user:this.state.user}
-      }} />
+      return <Redirect to='/gradebook'/>
     }
     //styles
     const styles = StyleSheet.create({

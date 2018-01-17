@@ -61,6 +61,35 @@ server.post('/login', (req, res) => {
     })
   })
 
+  //get the classes a student is in
+  server.get('/:id/classes', (req, res) => {
+    console.log('hello?');
+    knex('students')
+      .where({'students.id':req.params.id})
+      .innerJoin('students_class', 'students.id', 'students_class.student_id')
+      .innerJoin('classes', 'students_class.class_id', 'classes.id')
+      .then( (classes) => {
+        console.log(classes);
+        res.send(classes)
+      })
+      .catch( (err) => {
+        console.log(err);
+        res.send(err)
+      })
+  })
+
+  //get the students grades in a class
+  server.get('/:id/classes/:classid/assignments', (req, res) => {
+    knex('grades')
+      .select('*')
+      .where({'class_id':req.params.classid})
+      .innerJoin('assignments', 'grades.assignment_id', 'assignments.id')
+      .innerJoin('students', 'grades.student_id', req.params.id)
+      .then((grades) => {
+        console.log(grades);
+      })
+  })
+
   //update a student record
   server.patch('/', (req, res) => {
     console.log(req);
@@ -85,8 +114,7 @@ server.post('/login', (req, res) => {
       .catch( (err) => {
         res.send(err)
       })
+    })
   })
-
-})
 
 module.exports = server;

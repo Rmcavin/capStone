@@ -7,7 +7,7 @@ server.patch('/', (req, res) => {
   knex('grades')
     .where({student_id:req.body.student_id}).andWhere({assignment_id:req.body.assignment_id})
     .update({score: req.body.score, updatedat: new Date()})
-    .then( (res) => {
+    .then( (grades) => {
       res.end()
     })
 })

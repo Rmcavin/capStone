@@ -18,12 +18,13 @@ class StudentLogIn extends Component {
     //log in
     axios({
       method: 'post',
-      url: 'http://localhost:8000/students/login',
+      url: '/students/login',
       data: {username: username, password: password}
     })
     .then( (res) => {
       if (res.data !== 'invalid login credentials' && res.data !== 'User not found.' ) {
         this.setState({user:res.data, error: ''})
+        this.props.logIn(res.data, true,'student')
       } else {
         this.setState({error: res.data, studentUserName: null, studentPassWord: null})
       }
@@ -38,7 +39,7 @@ class StudentLogIn extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state);
+    //console.log(this.state);
   }
 
   render() {

@@ -3,23 +3,12 @@ import { StyleSheet, css } from 'aphrodite';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
-//components
-import Assignmenttable from './Assignmenttable'
-import Addassignment from './Addassignment'
-
-class Assignments extends Component {
+class Addassignment extends Component {
   constructor(props) {
     super(props)
-    this.state = {addAssignment: false};
+    this.state = {};
   }
 
-  componentDidUpdate() {
-    console.log('updated assignments state',this.state);
-  }
-
-  toggleAddAssignment() {
-    this.setState({addAssignment: !this.state.addAssignment})
-  }
 
   render() {
 
@@ -67,31 +56,12 @@ class Assignments extends Component {
       }
     });
 
-    let addAssignment = null;
-    if (this.state.toggleAddAssignment) {
-      addAssignment = <Addassignment />
-    }
-
-
-
     return (
       <section className={css(styles.section)}>
-      <h3 className={css(styles.title)}>Assignments</h3>
-      <div className = {css(styles.toolBar)}>
-        <div>
-          <button className={css(styles.toolButton)}>
-            <i className= "fa fa-plus-square" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-        {/*render add assignment if true*/}
-        {addAssignment}
-
-      <Assignmenttable user={this.props.user}/>
+      hello
     </section>
-
     )
 }
 }
 
-export default Assignments;
+export default Addassignment;
