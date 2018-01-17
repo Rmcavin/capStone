@@ -220,6 +220,7 @@ server.get('/:id/classes', (req, res) => {
     count = grades.length;
     grades.forEach( (el) => {
       let fullName = `${el.firstname} ${el.lastname}`
+
       //if there is no fullname, set it
       if (!entry.name) {
         entry.name = fullName

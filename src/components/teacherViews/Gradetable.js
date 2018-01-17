@@ -55,6 +55,7 @@ class Gradetable extends Component {
       url: `/teachers/${this.props.user.id}/classes/${currentClassID}/assignments`
     })
     .then( (res) => {
+      console.log('the grades from the server', res);
       res.data.columns.forEach( (el) => {
         if (el.Header !== 'name') {
           el.Cell = this.renderEditable
