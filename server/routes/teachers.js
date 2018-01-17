@@ -109,7 +109,7 @@ server.get('/:id/classes', (req, res) => {
           let columns = getColumns(studentGrades);
           let key = assignmentKey(studentGrades);
           let result = {columns: columns, grades: gradeData, key: key};
-          console.log(result);
+          
           res.send(result)
         })
       .catch( (err) => {
@@ -217,30 +217,45 @@ server.get('/:id/classes', (req, res) => {
 
   function processGrades(grades) {
     let processedData = [];
-    let entry = {}
-    count = grades.length;
+    let entry = {};
+    let key = {}
+    let count = grades.length;
+
     grades.forEach( (el) => {
       let fullName = `${el.firstname} ${el.lastname}`
+      //console.log(fullName);
+
+      if (!key[el.student_id]) {
+        key[el.student_id] = {student_id:el.student_id, name: fullName, [`${el.assignmentname}`]:el.score}
+      }
+      else {
+        key[el.student_id][el.assignmentname] = el.score;
+      }
+
 
       //if there is no fullname, set it
-      if (!entry.name) {
-        entry.name = fullName
-        entry.studentId = el.student_id;
-      }
-      if (entry.name !== fullName) {
-        processedData.push(entry)
-        entry = {}
-        entry.name = fullName;
-        entry.studentId = el.student_id;
-      }
-      entry[el.assignmentname] = el.score;
-      count -= 1;
-      //if this is the last entry push it now
-      if (count === 0) {
-        processedData.push(entry)
-      }
+      // if (!entry.name) {
+      //   entry.name = fullName
+      //   entry.studentId = el.student_id;
+      // }
+      // if (entry.name !== fullName) {
+      //   processedData.push(entry)
+      //   entry = {}
+      //   entry.name = fullName;
+      //   entry.studentId = el.student_id;
+      // }
+      // entry[el.assignmentname] = el.score;
+      // count -= 1;
+      // //if this is the last entry push it now
+      // if (count === 0) {
+      //   processedData.push(entry)
+      // }
     })
+    processedData = Object.values(key)
+
     return processedData;
+
+    //return processedData;
   }
 
   function getColumns(grades) {
