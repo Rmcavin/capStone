@@ -109,6 +109,7 @@ server.get('/:id/classes', (req, res) => {
           let columns = getColumns(studentGrades);
           let key = assignmentKey(studentGrades);
           let result = {columns: columns, grades: gradeData, key: key};
+          console.log(result);
           res.send(result)
         })
       .catch( (err) => {
@@ -170,7 +171,7 @@ server.get('/:id/classes', (req, res) => {
           classes: {}
         }
       }
-      assignmentMap[el.assignment_id].classes[el.class_id] = moment(el.due_date).format('M/D/YY'); 
+      assignmentMap[el.assignment_id].classes[el.class_id] = moment(el.due_date).format('M/D/YY');
 
       classMap[el.class_id] = el.classname;
     })
