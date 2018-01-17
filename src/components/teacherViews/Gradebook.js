@@ -89,11 +89,16 @@ class Gradebook extends Component {
       },
       select : {
         outline: '1px solid steelblue'
+      },
+      title : {
+        fontFamily: 'Roboto',
+        color: 'steelblue'
       }
     });
 
     return (
       <section className = {css(styles.section)}>
+        <h3 className={css(styles.title)}>Gradebook</h3>
         <div className = {css(styles.toolBar)}>
           <form>
             <select onChange = {this.selectClass} className = {css(styles.select)}>

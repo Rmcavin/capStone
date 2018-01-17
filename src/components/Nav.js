@@ -26,7 +26,7 @@ class Nav extends Component {
         return (
           <div className = {css(this.state.menuOpen ? styles.open : styles.closed, styles.dropDownContent )}>
             <Link to="/gradebook" className={css(styles.dropDownLink)}>Gradebook</Link>
-            <Link to="/classes" className={css(styles.dropDownLink)}>Roster</Link>
+            <Link to="/roster" className={css(styles.dropDownLink)}>Roster</Link>
             <Link to="/assignments" className={css(styles.dropDownLink)}>Assignments</Link>
             <Link to="/" className={css(styles.dropDownLink)} onClick={this.props.logOut}>Log Out</Link>
           </div>
@@ -60,6 +60,7 @@ class Nav extends Component {
         justifyContent : 'space-between',
         alignContent : 'center',
         flexWrap : 'nowrap',
+        fontFamily: 'Roboto'
       },
       title : {
         marginLeft: 30,
@@ -118,14 +119,11 @@ class Nav extends Component {
         '@media (min-width: 768px)': {
           display: 'inline'
         },
-        'hover:' : {
-          color: 'steelblue'
-        },
         color: 'white',
         padding: 10,
         textDecoration: 'none',
         display: 'block'
-      },
+      }
     });
 
     let menuOptions = this.determineMenu(styles);
