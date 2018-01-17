@@ -4,8 +4,8 @@ import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 //components
-import Classtable from './Classtable'
-class Classes extends Component {
+import Rostertable from './Rostertable'
+class Roster extends Component {
   constructor(props) {
     super(props)
     this.selectClass = this.selectClass.bind(this)
@@ -120,15 +120,12 @@ class Classes extends Component {
           <button className={css(styles.toolButton)} onClick = {this.addStudentToggle}>
             <i className= "fa fa-user-plus" aria-hidden="true"></i>
           </button>
-          <button className={css(styles.toolButton)}>
-            <i className= "fa fa-group" aria-hidden="true"></i>
-          </button>
         </div>
       </div>
-      <Classtable user={this.props.user} addStudent = {this.state.addStudent} currentClass={this.state.currentClass} addStudentToggle={this.addStudentToggle}/>
+      <Rostertable user={this.props.user} addStudent = {this.state.addStudent} currentClass={this.state.currentClass} addStudentToggle={this.addStudentToggle}/>
       </section>
     )
   }
 }
 
-export default Classes;
+export default Roster;

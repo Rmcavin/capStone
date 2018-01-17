@@ -6,7 +6,7 @@ import axios from 'axios';
 //components
 import AddStudent from './AddStudent'
 
-class Classtable extends Component {
+class Rostertable extends Component {
   constructor(props, context) {
     super(props, context)
     this.getData = this.getData.bind(this);
@@ -17,7 +17,7 @@ class Classtable extends Component {
   }
 
   componentDidUpdate() {
-    console.log('classtable state', this.state);
+    console.log('rostertable state', this.state);
   }
 
   componentWillReceiveProps(nextprops) {
@@ -135,4 +135,4 @@ class Classtable extends Component {
   }
 }
 
-export default Classtable;
+export default Rostertable;

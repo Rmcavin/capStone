@@ -25,9 +25,9 @@ class Nav extends Component {
       if (this.props.userType === 'teacher') {
         return (
           <div className = {css(this.state.menuOpen ? styles.open : styles.closed, styles.dropDownContent )}>
-            <Link to="/gradebook" className={css(styles.dropDownLink)}>Manage Grades</Link>
-            <Link to="/classes" className={css(styles.dropDownLink)}>Manage Classes</Link>
-            <Link to="/assignments" className={css(styles.dropDownLink)}>Manage Assignments</Link>
+            <Link to="/gradebook" className={css(styles.dropDownLink)}>Gradebook</Link>
+            <Link to="/classes" className={css(styles.dropDownLink)}>Roster</Link>
+            <Link to="/assignments" className={css(styles.dropDownLink)}>Assignments</Link>
             <Link to="/" className={css(styles.dropDownLink)} onClick={this.props.logOut}>Log Out</Link>
           </div>
         )

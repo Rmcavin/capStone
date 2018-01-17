@@ -68,7 +68,7 @@ class Assignments extends Component {
         </div>
       </div>
 
-      <Assignmenttable />
+      <Assignmenttable user={this.props.user}/>
     </section>
 
     )

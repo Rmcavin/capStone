@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('assignments_class', (table) => {
     table.increments('id').unsigned().primary().unique();
 
+    table.datetime('due_date').notNull();
     table.integer('assignment_id').notNullable().references('id').inTable('assignments').onDelete('CASCADE');
     table.integer('class_id').notNullable().references('id').inTable('classes').onDelete('CASCADE');
   })

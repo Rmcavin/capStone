@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import Nav from './components/Nav'
 import Landing from './components/Landing'
 import Gradebook from './components/teacherViews/Gradebook';
-import Classes from './components/teacherViews/Classes'
+import Roster from './components/teacherViews/Roster'
 import Assignments from './components/teacherViews/Assignments'
 
 class App extends Component {
@@ -55,9 +55,9 @@ class App extends Component {
               )
             )} />
             {/*conditional routing to class management*/}
-            <Route path='/classes' render={(teacherAccess) => (
+            <Route path='/roster' render={(teacherAccess) => (
               teacherAccess ? (
-                  <Classes user={this.state.user}/>
+                  <Roster user={this.state.user}/>
               ) : (
                 <Redirect to='/' />
               )

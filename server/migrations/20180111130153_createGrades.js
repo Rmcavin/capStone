@@ -7,7 +7,6 @@ exports.up = function(knex, Promise) {
     table.dateTime('deletedat').nullable();
 
     table.integer('score').notNull();
-    table.datetime('due_date').notNull();
     table.datetime('submit_date');
     table.integer('student_id').references('id').inTable('students');
     table.integer('assignment_id').references('id').inTable('assignments');

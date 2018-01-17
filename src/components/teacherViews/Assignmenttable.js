@@ -7,6 +7,7 @@ import axios from 'axios';
 class Assignmenttable extends Component {
   constructor(props, context) {
     super(props, context)
+    this.renderEditable = this.renderEditable.bind(this)
     this.state = {data: null, columns: null};
   }
 
@@ -42,19 +43,23 @@ class Assignmenttable extends Component {
   }
 
   getData() {
-    // axios({
-    //   method: 'get',
-    //   url: `/teachers/${this.props.user.id}/classes/${currentClassID}/students`
-    // })
-    // .then( (res) => {
-    //   res.data.columns.forEach( (el) => {
-    //       el.Cell = this.renderEditable
-    //   })
-    //   this.setState({data: res.data.rosterData, columns: res.data.columns})
-    // })
+    axios({
+      method: 'get',
+      url: `/teachers/${this.props.user.id}/assignments`
+    })
+    .then( (res) => {
+      console.log('the assignments', res);
+       res.data.columns.forEach( (el) => {
+         console.log('the el',el);
+         if (el.Header !== 'Type') {
+           el.Cell = this.renderEditable
+         }
+       })
+       this.setState({data: res.data.assignmentData, columns: res.data.columns})
+     })
   }
 
-  sendData(updates) {
+  //sendData(updates) {
     // axios({
     //   method: 'patch',
     //   url: '/students',
@@ -63,7 +68,7 @@ class Assignmenttable extends Component {
     // .then ( (res) => {
     //   console.log(res);
     // })
-  }
+  //}
 
   render() {
 
@@ -85,7 +90,7 @@ class Assignmenttable extends Component {
     //if there is no data
     if (!data) {
       //get the data
-      // this.getData(currentClassID)
+      this.getData()
 
       return <div className={css(styles.loaderContainer)}><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
               <span className="sr-only">Loading...</span></div>
@@ -115,5 +120,6 @@ class Assignmenttable extends Component {
       return null;
   }
 }
+
 
 export default Assignmenttable;

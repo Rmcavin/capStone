@@ -2,6 +2,7 @@ const express = require('express');
 const server = express();
 const knex = require('../db/knex');
 const bcrypt = require('bcrypt');
+const moment = require('moment')
 
 function User(username, hash, firstname, lastname, title) {
   this.username = username;
@@ -135,13 +136,67 @@ server.get('/:id/classes', (req, res) => {
 
   //get assignments for a teacher
   server.get('/:id/assignments', (req, res) => {
-    let teacherid = req.params.id
+    let teacherid = req.params.id;
+    knex('assignments')
+      .where({'assignments.teacher_id': teacherid})
+      .innerJoin('assignments_class', 'assignments.id', 'assignments_class.assignment_id')
+      .innerJoin('classes', 'assignments_class.class_id', 'classes.id')
+      .then( (assignments) => {
+        knex('classes')
+          .where({'classes.teacher_id':teacherid})
+          .then( (classes) => {
+            let data = processAssignments(assignments)
+            res.send(data)
+          })
+
+      })
+      .catch( (err) => {
+        res.send(err)
+      })
   })
 
-  //============================ ROSTER PROCESSESING
+  //============================ ASSIGNMENT PROCESSESSING
+
+  function processAssignments(assignments) {
+    let assignmentMap = {};
+    let classMap = {};
+    let processedData = {};
+    let data = []
+    assignments.forEach( (el) => {
+      if (!assignmentMap[el.assignment_id]) {
+        assignmentMap[el.assignment_id] = {
+          name: el.assignmentname,
+          type: el.type,
+          classes: {}
+        }
+      }
+      assignmentMap[el.assignment_id].classes[el.class_id] = moment(el.due_date).format('M/D/YY'); 
+
+      classMap[el.class_id] = el.classname;
+    })
+
+    for (let id in assignmentMap) {
+      let entry = {
+        name: assignmentMap[id].name,
+        type: assignmentMap[id].type
+      };
+      for (let cid in classMap) {
+        entry[classMap[cid]] = assignmentMap[id].classes[cid];
+      }
+      data.push(entry);
+    }
+    let columnNames = Object.keys(data[0])
+    let columns = [];
+    columnNames.forEach( (el) => {
+      columns.push({Header: el.charAt(0).toUpperCase() + el.slice(1), accessor: el})
+    })
+    processedData = {columns, assignmentData:data}
+    return processedData;
+  }
+
+  //============================ ROSTER PROCESSESSING
 
   function processRoster(roster) {
-    console.log(roster);
     let processedData = [];
     let entry = {};
     roster.forEach( (el) => {
@@ -156,7 +211,7 @@ server.get('/:id/classes', (req, res) => {
     return processedData;
   }
 
-  //============================ GRADES PROCESSESING
+  //============================ GRADES PROCESSESSING
 
   function processGrades(grades) {
     let processedData = [];
@@ -196,7 +251,6 @@ server.get('/:id/classes', (req, res) => {
     columnnames.forEach( (el) => {
       columns.push({Header: el, accessor: el})
     })
-    console.log(columns);
     return columns;
   }
 
@@ -204,7 +258,6 @@ server.get('/:id/classes', (req, res) => {
     let assignmentMap = {};
     grades.forEach( (el) => {
       if (!assignmentMap.hasOwnProperty(el.assignmentname)) {
-        console.log(el);
         assignmentMap[el.assignmentname] = el.assignment_id;
       }
     })
