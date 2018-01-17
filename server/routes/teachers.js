@@ -124,6 +124,7 @@ server.get('/:id/classes', (req, res) => {
         .where({'classes.id':classid})
         .innerJoin('students_class', 'classes.id', 'students_class.class_id')
         .innerJoin('students', 'students_class.student_id', 'students.id')
+        .orderBy('firstname', 'desc')
         .then( (roster) => {
           let rosterData = processRoster(roster)
           let columns = [{Header: 'Name', accessor: 'name'}, {Header: 'Grade', accessor: 'grade'}, {Header: 'Username', accessor: 'username'}, {Header: 'Update Password', accessor: 'password'}];
