@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 //components

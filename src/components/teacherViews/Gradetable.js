@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import {Redirect} from 'react-router-dom';
 import ReactTable from 'react-table'
 import axios from 'axios';
 
@@ -15,7 +14,7 @@ class Gradetable extends Component {
   }
 
   componentDidUpdate() {
-    console.log('datatable state', this.state);
+    //console.log('datatable state', this.state);
   }
 
   componentWillReceiveProps(nextprops) {
@@ -34,10 +33,11 @@ class Gradetable extends Component {
           const data = [...this.state.data];
           data[cellInfo.index][cellInfo.column.id] = parseInt(e.target.innerHTML);
           let cellUpdate = {
-            student_id: cellInfo.original.studentId,
+            student_id: cellInfo.original.student_id,
             assignment_id: this.state.key[cellInfo.column.id],
             score: cellInfo.original[cellInfo.column.id]
           }
+          console.log('the cell data', cellInfo);
           console.log('the cell update', cellUpdate);
           this.sendData(cellUpdate)
           this.setState({ data });
@@ -114,6 +114,7 @@ class Gradetable extends Component {
             columns={this.state.columns}
             showPagination={false}
             showPaginationBottom={false}
+            className = "-striped -highlight"
           />
           </div>
         )

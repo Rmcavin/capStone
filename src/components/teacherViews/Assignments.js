@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 //components
@@ -10,7 +9,9 @@ import Addassignment from './Addassignment'
 class Assignments extends Component {
   constructor(props) {
     super(props)
-    this.state = {addAssignment: false};
+    this.toggleAddAssignment = this.toggleAddAssignment.bind(this)
+    this.newAssignment = this.newAssignment.bind(this)
+    this.state = {addAssignment: false, newAssignment: null};
   }
 
   componentDidUpdate() {
@@ -19,6 +20,10 @@ class Assignments extends Component {
 
   toggleAddAssignment() {
     this.setState({addAssignment: !this.state.addAssignment})
+  }
+
+  newAssignment(assignment) {
+    this.setState({newAssignment:assignment})
   }
 
   render() {
@@ -67,9 +72,9 @@ class Assignments extends Component {
       }
     });
 
-    let addAssignment = null;
-    if (this.state.toggleAddAssignment) {
-      addAssignment = <Addassignment />
+    let toggleAdd = null;
+    if (this.state.addAssignment) {
+      toggleAdd = <Addassignment toggle={this.toggleAddAssignment} user={this.props.user}/>
     }
 
 
@@ -80,18 +85,15 @@ class Assignments extends Component {
       <div className = {css(styles.toolBar)}>
         <div>
           <button className={css(styles.toolButton)}>
-            <i className= "fa fa-plus-square" aria-hidden="true"></i>
+            <i className= "fa fa-plus-square" aria-hidden="true" onClick = {this.toggleAddAssignment}></i>
           </button>
         </div>
       </div>
         {/*render add assignment if true*/}
-        {addAssignment}
-
-      <Assignmenttable user={this.props.user}/>
+        {toggleAdd}
+      <Assignmenttable user={this.props.user} newAssignment={this.state.newAssignment}/>
     </section>
-
-    )
-}
+    )}
 }
 
 export default Assignments;

@@ -30,7 +30,7 @@ class TeacherSignUp extends Component {
     })
     .then( (res) => {
       console.log(res);
-      if (res.data != 'incorrect input information' && res.data != 'invalid registration') {
+      if (res.data !== 'incorrect input information' && res.data !== 'invalid registration') {
         this.setState({user:res.data, error: ''})
         this.props.logIn(res.data, true,'teacher')
       } else {

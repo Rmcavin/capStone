@@ -7,3 +7,6 @@ const bcrypt = require('bcrypt');
 server.post('/new', (req, res) => {
 
 })
+
+
+module.exports = server;

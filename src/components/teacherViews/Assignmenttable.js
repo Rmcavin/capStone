@@ -15,6 +15,13 @@ class Assignmenttable extends Component {
     console.log('assignmenttable state', this.state);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.newAssignment) {
+      console.log('it made it to the table', nextProps.newAssignment);
+      console.log('assignment table data structure', this.state.data);
+    }
+  }
+
   renderEditable(cellInfo) {
     return (
       <div
@@ -48,9 +55,8 @@ class Assignmenttable extends Component {
       url: `/teachers/${this.props.user.id}/assignments`
     })
     .then( (res) => {
-      console.log('the assignments', res);
+      //console.log('the assignments', res);
        res.data.columns.forEach( (el) => {
-         console.log('the el',el);
          if (el.Header !== 'Type') {
            el.Cell = this.renderEditable
          }

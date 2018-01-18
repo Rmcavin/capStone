@@ -1,65 +1,89 @@
 import React, {Component} from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 class Addassignment extends Component {
   constructor(props) {
     super(props)
-    this.state = {};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {assignmentname: null, assignmenttype: null};
+  }
+
+  handleChange(event) {
+    this.setState({[event.target.name]:event.target.value});
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    let body = {teacher_id: this.props.user.id, assignmentname: this.state.assignmentname, assignmenttype: this.state.assignmenttype}
+    console.log('the data', body);
+    axios({
+      method: 'post',
+      url: '/assignments/new',
+      data: body
+    })
+    .then( (res) => {
+      console.log(res);
+      if (res.data.assignmentname) {
+        this.props.newAssignment(res.data)
+        this.setState({error: null})
+        this.setState({message: 'Success'})
+      }
+      else {
+        this.setState({error: 'Invalid Entry'})
+      }
+    })
   }
 
 
+
   render() {
+    console.log('addAssignment props', this.props);
 
     //styles
     const styles = StyleSheet.create({
-      section : {
-        margin: 'auto',
-        marginTop: 50,
-        width: '80%',
-        padding: 10,
-        minHeight: 500,
-        display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'none',
-        justifyContent: 'flex-start',
-        alignContent: 'center',
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
+      form : {
+        padding: 20,
+        margin: 'auto'
       },
-      dropDown : {
-        width: '50%'
+      label : {
+        display: 'block'
       },
-      toolBar : {
-        width: 'auto',
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'none',
-        justifyContent: 'flex-end',
-        alignContent: 'center',
-        backgroundColor: 'lightsteelblue',
-        padding: 10
+      input : {
+        display: 'inline'
       },
-      toolButton : {
-        border: 'none',
-        backgroundColor: 'transparent',
-        fontSize: 18,
-        marginLeft: 5,
-        marginRight: 5
+      submit : {
+        backgroundColor: '#2b506e',
+        padding: 5,
+        color: 'white',
+        margin: 5,
+        display: 'inline'
       },
-      select : {
-        outline: '1px solid steelblue'
-      },
-      title : {
-        fontFamily: 'Roboto',
-        color: 'steelblue'
+      close : {
+        backgroundColor: '#2b506e',
+        padding: 5,
+        color: 'white',
+        margin: 5,
+        display: 'inline'
       }
     });
 
     return (
-      <section className={css(styles.section)}>
-      hello
-    </section>
+      <form onSubmit={this.handleSubmit}>
+      <label className={css(styles.label)}>Assignment Name:</label>
+      <input type="text" name="assignmentname" onChange={this.handleChange} className={css(styles.input)}/>
+      <label className={css(styles.label)}>Assignment Type:</label>
+      <select name="assignmenttype" onChange={this.handleChange} className={css(styles.input)}>
+        <option>Exercise</option>
+        <option>Assessment</option>
+        <option>Rubric</option>
+      </select>
+      <div>
+        <input type="submit" className={css(styles.submit)}/>
+        <button className={css(styles.close)} onClick={this.props.toggle}>Cancel</button>
+      </div>
+      </form>
     )
 }
 }

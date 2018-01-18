@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 //components
 import Gradetable from './Gradetable'
-import AddStudent from './AddStudent'
 
 class Gradebook extends Component {
   constructor(props) {
