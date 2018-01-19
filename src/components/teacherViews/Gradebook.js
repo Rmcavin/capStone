@@ -84,6 +84,8 @@ class Gradebook extends Component {
         border: 'none',
         backgroundColor: 'transparent',
         fontSize: 18,
+        marginLeft: 5,
+        marginRight: 5
       },
       select : {
         outline: '1px solid steelblue'

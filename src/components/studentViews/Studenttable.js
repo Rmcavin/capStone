@@ -111,6 +111,8 @@ class Studenttable extends Component {
             columns={this.state.columns}
             showPagination={false}
             showPaginationBottom={false}
+            noDataText="No Grades to Display."
+            className = "-striped -highlight"
           />
           </div>
         )

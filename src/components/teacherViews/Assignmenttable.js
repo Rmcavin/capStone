@@ -119,6 +119,8 @@ class Assignmenttable extends Component {
             columns={this.state.columns}
             showPagination={false}
             showPaginationBottom={false}
+            noDataText="No Assignment Data to Display."
+            className = "-striped -highlight"
           />
           </div>
         )

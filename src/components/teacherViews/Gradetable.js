@@ -14,7 +14,7 @@ class Gradetable extends Component {
   }
 
   componentDidUpdate() {
-    //console.log('datatable state', this.state);
+    console.log('gradetable state', this.state);
   }
 
   componentWillReceiveProps(nextprops) {
@@ -37,8 +37,6 @@ class Gradetable extends Component {
             assignment_id: this.state.key[cellInfo.column.id],
             score: cellInfo.original[cellInfo.column.id]
           }
-          console.log('the cell data', cellInfo);
-          console.log('the cell update', cellUpdate);
           this.sendData(cellUpdate)
           this.setState({ data });
         }}
@@ -61,7 +59,7 @@ class Gradetable extends Component {
           el.Cell = this.renderEditable
         }
       })
-      this.setState({columns: res.data.columns, data: res.data.grades, key: res.data.key})
+      this.setState({columns: res.data.columns, data: res.data.gradeData, key: res.data.key})
     })
   }
 
@@ -114,6 +112,7 @@ class Gradetable extends Component {
             columns={this.state.columns}
             showPagination={false}
             showPaginationBottom={false}
+            noDataText="No Grade Data to Display."
             className = "-striped -highlight"
           />
           </div>

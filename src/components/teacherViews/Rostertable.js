@@ -125,6 +125,8 @@ class Rostertable extends Component {
             columns={this.state.columns}
             showPagination={false}
             showPaginationBottom={false}
+            noDataText="No Roster Data to Display."
+            className = "-striped -highlight"
           />
           </div>
         )

@@ -5,12 +5,11 @@ const bcrypt = require('bcrypt');
 
 //add a new assignment
 server.post('/new', (req, res) => {
-  console.log('hello?');
   knex('assignments')
     .insert({
       assignmentname:req.body.assignmentname,
       type: req.body.assignmenttype,
-      teacher_id:req.body.teacher_id,
+      teacher_id:parseInt(req.body.teacher_id),
       createdat: new Date()},'*')
     .then( (assignment) => {
       console.log('the result from db',assignment);

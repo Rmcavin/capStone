@@ -51,20 +51,15 @@ class Classtable extends Component {
   }
 
   getData() {
-
-    // axios({
-    //   method: 'get',
-    //   url: `/teachers/${this.props.user.id}/assignments`
-    // })
-    // .then( (res) => {
-    //   console.log('the assignments from db', res);
-    //    res.data.columns.forEach( (el) => {
-    //      if (el.Header !== 'Type') {
-    //        el.Cell = this.renderEditable
-    //      }
-    //    })
-    //    this.setState({data: res.data.assignmentData, columns: res.data.columns})
-    //  })
+     axios({
+       method: 'get',
+       url: `/teachers/${this.props.user.id}/classes`
+     })
+     .then( (res) => {
+       console.log('class table response', res);
+       let columns = [{Header:'Class Name', accessor: 'classname'}, {Header: 'Subject', accessor: 'subject'}]
+       this.setState({data: res.data, columns: columns})
+      })
   }
 
   //sendData(updates) {
@@ -119,6 +114,8 @@ class Classtable extends Component {
             columns={this.state.columns}
             showPagination={false}
             showPaginationBottom={false}
+            noDataText="No Class Data to Display."
+            className = "-striped -highlight"
           />
           </div>
         )

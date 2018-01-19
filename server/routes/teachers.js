@@ -111,8 +111,11 @@ server.get('/:id/classes', (req, res) => {
          })
         .then((grades) => {
           //console.log(grades);
-          let result = processGrades(grades);
-          console.log(result);
+          let gradeData = processGrades(grades);
+          let columns = getColumns(grades);
+          let key = assignmentKey(grades)
+          let result = {gradeData:gradeData, columns:columns, key:key}
+          res.send(result)
         })
       // knex('grades')
       //   .select('*')
@@ -347,8 +350,9 @@ server.get('/:id/classes', (req, res) => {
       }
     })
     columnnames.forEach( (el) => {
-      columns.push({Header: el, accessor: el})
+      columns.push({Header: el.charAt(0).toUpperCase() + el.slice(1), accessor: el})
     })
+    console.log(columns);
     return columns;
   }
 

@@ -122,7 +122,7 @@ class Roster extends Component {
         </form>
         <div>
           <button className={css(styles.toolButton)} onClick = {this.addStudentToggle}>
-            <i className= "fa fa-user-plus" aria-hidden="true"></i>
+            <i className= "fa fa-plus-square" aria-hidden="true"></i>
           </button>
         </div>
       </div>
