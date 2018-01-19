@@ -303,7 +303,7 @@ server.get('/:id/classes', (req, res) => {
     let count = grades.length;
 
     grades.forEach( (el) => {
-      console.log(el);
+      //console.log(el);
       let fullName = `${el.firstname} ${el.lastname}`
       //console.log(fullName);
 
@@ -352,7 +352,7 @@ server.get('/:id/classes', (req, res) => {
     columnnames.forEach( (el) => {
       columns.push({Header: el.charAt(0).toUpperCase() + el.slice(1), accessor: el})
     })
-    console.log(columns);
+    //console.log(columns);
     return columns;
   }
 

@@ -32,10 +32,12 @@ class Gradetable extends Component {
         onBlur={e => {
           const data = [...this.state.data];
           data[cellInfo.index][cellInfo.column.id] = parseInt(e.target.innerHTML);
+          console.log(cellInfo);
           let cellUpdate = {
+            class_id: this.props.currentClass,
             student_id: cellInfo.original.student_id,
             assignment_id: this.state.key[cellInfo.column.id],
-            score: cellInfo.original[cellInfo.column.id]
+            score: cellInfo.original[cellInfo.column.id],
           }
           this.sendData(cellUpdate)
           this.setState({ data });
