@@ -3,15 +3,15 @@ import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
 
 //components
-import Assignmenttable from './Assignmenttable'
-import Addassignment from './Addassignment'
+import Classtable from './Classtable'
+import AddClass from './AddClass'
 
-class Assignments extends Component {
+class Classes extends Component {
   constructor(props) {
     super(props)
     this.toggleAddAssignment = this.toggleAddAssignment.bind(this)
     this.newAssignment = this.newAssignment.bind(this)
-    this.state = {addAssignment: false, newAssignment: null};
+    this.state = {addClass: false, newClass: null};
   }
 
   componentDidUpdate() {
@@ -19,11 +19,11 @@ class Assignments extends Component {
   }
 
   toggleAddAssignment() {
-    this.setState({addAssignment: !this.state.addAssignment})
+    this.setState({addAssignment: !this.state.addClass})
   }
 
-  newAssignment(assignment) {
-    this.setState({newAssignment:assignment})
+  newAssignment(newclass) {
+    this.setState({newClass:newclass})
   }
 
   render() {
@@ -73,27 +73,27 @@ class Assignments extends Component {
     });
 
     let toggleAdd = null;
-    if (this.state.addAssignment) {
-      toggleAdd = <Addassignment toggle={this.toggleAddAssignment} user={this.props.user} newAssignment = {this.newAssignment}/>
+    if (this.state.addClass) {
+      toggleAdd = <AddClass toggle={this.toggleAddClass} user={this.props.user} newClass = {this.newClass}/>
     }
 
 
 
     return (
       <section className={css(styles.section)}>
-      <h3 className={css(styles.title)}>Assignments</h3>
+      <h3 className={css(styles.title)}>Classes</h3>
       <div className = {css(styles.toolBar)}>
         <div>
           <button className={css(styles.toolButton)}>
-            <i className= "fa fa-plus-square" aria-hidden="true" onClick = {this.toggleAddAssignment}></i>
+            <i className= "fa fa-plus-square" aria-hidden="true" onClick = {this.toggleAddClass}></i>
           </button>
         </div>
       </div>
         {/*render add assignment if true*/}
         {toggleAdd}
-      <Assignmenttable user={this.props.user} newAssignment={this.state.newAssignment}/>
+      <Classtable user={this.props.user} newClass={this.state.newClass}/>
     </section>
     )}
 }
 
-export default Assignments;
+export default Classes;

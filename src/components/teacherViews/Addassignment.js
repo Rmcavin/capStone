@@ -7,7 +7,7 @@ class Addassignment extends Component {
     super(props)
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {assignmentname: null, assignmenttype: null};
+    this.state = {assignmentname: null, assignmenttype: 'exercise'};
   }
 
   handleChange(event) {
@@ -75,9 +75,9 @@ class Addassignment extends Component {
       <input type="text" name="assignmentname" onChange={this.handleChange} className={css(styles.input)}/>
       <label className={css(styles.label)}>Assignment Type:</label>
       <select name="assignmenttype" onChange={this.handleChange} className={css(styles.input)}>
-        <option>Exercise</option>
-        <option>Assessment</option>
-        <option>Rubric</option>
+        <option value='exercise'>Exercise</option>
+        <option value='assessment'>Assessment</option>
+        <option value='rubric'>Rubric</option>
       </select>
       <div>
         <input type="submit" className={css(styles.submit)}/>

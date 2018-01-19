@@ -4,7 +4,7 @@ import ReactTable from 'react-table'
 import axios from 'axios';
 
 
-class Assignmenttable extends Component {
+class Classtable extends Component {
   constructor(props, context) {
     super(props, context)
     this.renderEditable = this.renderEditable.bind(this)
@@ -12,15 +12,15 @@ class Assignmenttable extends Component {
   }
 
   componentDidUpdate() {
-    console.log('assignmenttable state', this.state);
+    console.log('classtable state', this.state);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.newAssignment) {
-      let datum = {name: nextProps.newAssignment.assignmentname, type: nextProps.newAssignment.type}
-      this.setState({ data: [...this.state.data, datum] })
-
-    }
+    // if (nextProps.newClass) {
+    //   let datum = {name: nextProps.newClass.assignmentname, type: nextProps.newAssignment.type}
+    //   this.setState({ data: [...this.state.data, datum] })
+    //
+    // }
   }
 
   renderEditable(cellInfo) {
@@ -51,20 +51,20 @@ class Assignmenttable extends Component {
   }
 
   getData() {
-    console.log('getting the assignments!');
-    axios({
-      method: 'get',
-      url: `/teachers/${this.props.user.id}/assignments`
-    })
-    .then( (res) => {
-      console.log('the assignments from db', res);
-       res.data.columns.forEach( (el) => {
-         if (el.Header !== 'Type') {
-           el.Cell = this.renderEditable
-         }
-       })
-       this.setState({data: res.data.assignmentList, columns: res.data.columns})
-     })
+
+    // axios({
+    //   method: 'get',
+    //   url: `/teachers/${this.props.user.id}/assignments`
+    // })
+    // .then( (res) => {
+    //   console.log('the assignments from db', res);
+    //    res.data.columns.forEach( (el) => {
+    //      if (el.Header !== 'Type') {
+    //        el.Cell = this.renderEditable
+    //      }
+    //    })
+    //    this.setState({data: res.data.assignmentData, columns: res.data.columns})
+    //  })
   }
 
   //sendData(updates) {
@@ -130,4 +130,4 @@ class Assignmenttable extends Component {
 }
 
 
-export default Assignmenttable;
+export default Classtable;

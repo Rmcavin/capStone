@@ -27,6 +27,7 @@ class Nav extends Component {
           <div className = {css(this.state.menuOpen ? styles.open : styles.closed, styles.dropDownContent )}>
             <Link to="/gradebook" className={css(styles.dropDownLink)}>Gradebook</Link>
             <Link to="/roster" className={css(styles.dropDownLink)}>Roster</Link>
+            <Link to="/classes" className={css(styles.dropDownLink)}>Classes</Link>
             <Link to="/assignments" className={css(styles.dropDownLink)}>Assignments</Link>
             <Link to="/" className={css(styles.dropDownLink)} onClick={this.props.logOut}>Log Out</Link>
           </div>
@@ -83,6 +84,7 @@ class Nav extends Component {
       dropDown : {
         position: 'relative',
         display: 'inlineBlock',
+        textAlign: 'right',
         marginRight: 40,
         marginTop: 20
       },

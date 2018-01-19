@@ -8,6 +8,7 @@ import Nav from './components/Nav'
 import Landing from './components/Landing'
 import Gradebook from './components/teacherViews/Gradebook';
 import Roster from './components/teacherViews/Roster'
+import Classes from './components/teacherViews/Classes'
 import Assignments from './components/teacherViews/Assignments'
 import Dashboard from './components/studentViews/Dashboard'
 
@@ -55,10 +56,18 @@ class App extends Component {
                 <Redirect to='/' />
               )
             )} />
-            {/*conditional routing to class management*/}
+            {/*conditional routing to roster management*/}
             <Route path='/roster' render={(teacherAccess) => (
               teacherAccess ? (
                   <Roster user={this.state.user}/>
+              ) : (
+                <Redirect to='/' />
+              )
+            )} />
+            {/*conditional routing to class management*/}
+            <Route path='/classes' render={(teacherAccess) => (
+              teacherAccess ? (
+                  <Classes user={this.state.user}/>
               ) : (
                 <Redirect to='/' />
               )
