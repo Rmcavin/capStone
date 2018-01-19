@@ -12,7 +12,7 @@ exports.seed = function(knex, Promise) {
         {createdat: new Date(), assignmentname: 'Stoichiometry practice', type: 'exercise', teacher_id:1},
         {createdat: new Date(), assignmentname: 'Molar mass vs atomic mass', type: 'exercise', teacher_id:1},
         {createdat: new Date(), assignmentname: 'Perimeter and area practice', type: 'exercise', teacher_id:2},
-        {createdat: new Date(), assignmentname: 'Pologons worksheet', type: 'exercise', teacher_id:2}
+        {createdat: new Date(), assignmentname: 'Polygons worksheet', type: 'exercise', teacher_id:2}
       ]);
     });
 };

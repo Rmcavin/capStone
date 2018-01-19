@@ -99,19 +99,34 @@ server.get('/:id/classes', (req, res) => {
   //get assignments, students, grades for a class
   server.get('/:id/classes/:classid/assignments' , (req, res) => {
     let classid = req.params.classid;
-      knex('grades')
-        .select('*')
-        .where({'class_id':classid})
-        .innerJoin('assignments', 'grades.assignment_id', 'assignments.id')
-        .innerJoin('students', 'grades.student_id', 'students.id')
-        .then( (studentGrades) => {
-          let gradeData = processGrades(studentGrades);
-          let columns = getColumns(studentGrades);
-          let key = assignmentKey(studentGrades);
-          let result = {columns: columns, grades: gradeData, key: key};
-          
-          res.send(result)
+      knex('classes')
+        .select('students.id', 'students.firstname', 'students.lastname', 'students_class.class_id', 'assignments_class.assignment_id', 'assignments.assignmentname', 'grades.score')
+        .where({'classes.id':classid})
+        .innerJoin('students_class', 'classes.id', 'students_class.class_id')
+        .innerJoin('students', 'students_class.student_id', 'students.id')
+        .leftOuterJoin('assignments_class', 'classes.id', 'assignments_class.class_id')
+        .innerJoin('assignments', 'assignments_class.assignment_id', 'assignments.id')
+        .leftOuterJoin('grades', function() {
+           this.on('grades.student_id', '=', 'students.id').andOn('grades.assignment_id', '=', 'assignments.id').andOn('grades.class_id', '=', 'classes.id')
+         })
+        .then((grades) => {
+          //console.log(grades);
+          let result = processGrades(grades);
+          console.log(result);
         })
+      // knex('grades')
+      //   .select('*')
+      //   .where({'class_id':classid})
+      //   .innerJoin('assignments', 'grades.assignment_id', 'assignments.id')
+      //   .innerJoin('students', 'grades.student_id', 'students.id')
+      //   .then( (studentGrades) => {
+      //     let gradeData = processGrades(studentGrades);
+      //     let columns = getColumns(studentGrades);
+      //     let key = assignmentKey(studentGrades);
+      //     let result = {columns: columns, grades: gradeData, key: key};
+      //
+      //     res.send(result)
+        //})
       .catch( (err) => {
         res.send(err)
       })
@@ -139,61 +154,124 @@ server.get('/:id/classes', (req, res) => {
   //get assignments for a teacher
   server.get('/:id/assignments', (req, res) => {
     let teacherid = req.params.id;
-    knex('assignments')
-      .where({'assignments.teacher_id': teacherid})
-      .innerJoin('assignments_class', 'assignments.id', 'assignments_class.assignment_id')
-      .innerJoin('classes', 'assignments_class.class_id', 'classes.id')
-      .then( (assignments) => {
-        knex('classes')
-          .where({'classes.teacher_id':teacherid})
-          .then( (classes) => {
-            let data = processAssignments(assignments)
-            res.send(data)
-          })
 
+    knex('assignments')
+      .select('assignments.id', 'assignments.assignmentname', 'assignments.type', 'assignments_class.class_id', 'assignments_class.due_date', 'classes.classname')
+      .where({'assignments.teacher_id': teacherid})
+      .leftOuterJoin('assignments_class', 'assignments.id', 'assignments_class.assignment_id')
+      .leftOuterJoin('classes', 'assignments_class.class_id', 'classes.id')
+      .then( (assignments) => {
+        let result = processAssignments(assignments);
+        res.send(result)
       })
-      .catch( (err) => {
-        res.send(err)
-      })
+  //  knex('assignments')
+    //  .where({'assignments.teacher_id': teacherid})
+      // .innerJoin('assignments_class', 'assignments.id', 'assignments_class.assignment_id')
+      // .innerJoin('classes', 'assignments_class.class_id', 'classes.id')
+    //  .then( (assignments) => {
+        // knex('classes')
+        //   .where({'classes.teacher_id':teacherid})
+        //   .then( (classes) => {
+        //   })
+        // let data = processAssignments(assignments)
+
+         //console.log('will it blend',assignments);
+        // assignmentsIds = assignments.map(assignment => assignment.id)
+         //console.log(assignmentsIds);
+        //  knex('assignments_class')
+        //   .whereIn('assignment_id',assignmentsIds)
+        //   .then( assignmentsWithAClass => {
+        //     classIds = assignmentsWithAClass.map(record => record.class_id)
+        //     knex('classes')
+        //       .whereIn('id', classIds)
+        //       .then( (classes) => {
+        //         let results = [assignments, assignmentsWithAClass, classes]
+        //         //console.log(results);
+        //         let data = processAssignments(results)
+        //       })
+            //console.log(assignmentsWithAClass);
+            //res.send(assignmentsWithAClass)
+
+        //  })
+       //})
+      // .catch( (err) => {
+      //   res.send(err)
+      // })
   })
 
   //============================ ASSIGNMENT PROCESSESSING
 
   function processAssignments(assignments) {
+    let classList = [];
     let assignmentMap = {};
-    let classMap = {};
-    let processedData = {};
-    let data = []
+    let assignmentList = [];
+
     assignments.forEach( (el) => {
-      if (!assignmentMap[el.assignment_id]) {
-        assignmentMap[el.assignment_id] = {
-          name: el.assignmentname,
-          type: el.type,
-          classes: {}
-        }
+      if (!assignmentMap[el.id]) {
+        assignmentMap[el.id] = {id: el.id, name:el.assignmentname, type:el.type, classes:{}}
       }
-      assignmentMap[el.assignment_id].classes[el.class_id] = moment(el.due_date).format('M/D/YY');
-
-      classMap[el.class_id] = el.classname;
+      if (el.class_id) {
+        assignmentMap[el.id].classes[el.classname] = moment(el.due_date).format('M/D/YY');
+      }
+      if (classList.indexOf(el.classname) === -1 && el.classname !== null) {
+        classList.push(el.classname);
+      }
     })
 
-    for (let id in assignmentMap) {
-      let entry = {
-        name: assignmentMap[id].name,
-        type: assignmentMap[id].type
-      };
-      for (let cid in classMap) {
-        entry[classMap[cid]] = assignmentMap[id].classes[cid];
+    for (let key in assignmentMap) {
+      let entry = {name: assignmentMap[key].name, type:assignmentMap[key].type};
+      for (let classname of classList) {
+        entry[classname] = assignmentMap[key].classes[classname];
       }
-      data.push(entry);
+      assignmentList.push(entry);
     }
-    let columnNames = Object.keys(data[0])
+
+    let columnNames = Object.keys(assignmentList[0])
     let columns = [];
-    columnNames.forEach( (el) => {
-      columns.push({Header: el.charAt(0).toUpperCase() + el.slice(1), accessor: el})
+
+    columnNames.forEach((el) => {
+      column = {Header: el.charAt(0).toUpperCase() + el.slice(1), accessor: el}
+      columns.push(column)
     })
-    processedData = {columns, assignmentData:data}
-    return processedData;
+
+    return {columns:columns, assignmentList:assignmentList};
+
+
+
+    //console.log(assignments[1]);
+    // let classMap = {};
+    // let processedData = {};
+    // let data = []
+    // assignments[0].forEach( (el) => {
+    //   if (!assignmentMap[el.assignment_id]) {
+    //     assignmentMap[el.assignment_id] = {
+    //       name: el.assignmentname,
+    //       type: el.type,
+    //       classes: {}
+    //     }
+    //   }
+    //   assignmentMap[el.assignment_id].classes[el.class_id] = moment(el.due_date).format('M/D/YY');
+    //
+    //   classMap[el.class_id] = el.classname;
+    // })
+    //
+    // for (let id in assignmentMap) {
+    //   let entry = {
+    //     name: assignmentMap[id].name,
+    //     type: assignmentMap[id].type
+    //   };
+    //   for (let cid in classMap) {
+    //     entry[classMap[cid]] = assignmentMap[id].classes[cid];
+    //   }
+    //   data.push(entry);
+    // }
+    // let columnNames = Object.keys(data[0])
+    // let columns = [];
+    // columnNames.forEach( (el) => {
+    //   columns.push({Header: el.charAt(0).toUpperCase() + el.slice(1), accessor: el})
+    // })
+    // processedData = {columns, assignmentData:data}
+    // return processedData;
   }
 
   //============================ ROSTER PROCESSESSING
@@ -222,16 +300,18 @@ server.get('/:id/classes', (req, res) => {
     let count = grades.length;
 
     grades.forEach( (el) => {
+      console.log(el);
       let fullName = `${el.firstname} ${el.lastname}`
       //console.log(fullName);
 
-      if (!key[el.student_id]) {
-        key[el.student_id] = {student_id:el.student_id, name: fullName, [`${el.assignmentname}`]:el.score}
+      if (!key[el.id]) {
+        key[el.id] = {student_id:el.id, name: fullName, [`${el.assignmentname}`]:el.score}
       }
       else {
-        key[el.student_id][el.assignmentname] = el.score;
+        key[el.id][el.assignmentname] = el.score;
       }
 
+      //console.log(key);
 
       //if there is no fullname, set it
       // if (!entry.name) {

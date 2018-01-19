@@ -9,11 +9,11 @@ server.post('/new', (req, res) => {
   knex('assignments')
     .insert({
       assignmentname:req.body.assignmentname,
-      type: req.body.type,
+      type: req.body.assignmenttype,
       teacher_id:req.body.teacher_id,
       createdat: new Date()},'*')
     .then( (assignment) => {
-      console.log(assignment);
+      console.log('the result from db',assignment);
       res.send(assignment[0])
     })
     .catch((err) => {
