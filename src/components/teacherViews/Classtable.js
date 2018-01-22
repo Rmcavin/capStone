@@ -20,7 +20,7 @@ class Classtable extends Component {
     // if (nextProps.newClass) {
     //   let datum = nextProps.newClass;
       //this.setState({ data: [...this.state.data, datum] })
-    }
+    //}
   }
 
   renderEditable(cellInfo) {
