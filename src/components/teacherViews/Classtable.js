@@ -16,10 +16,10 @@ class Classtable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('new props',nextProps);
-    if (nextProps.newClass) {
-      let datum = nextProps.newClass;
-      this.setState({ data: [...this.state.data, datum] })
+    // console.log('new props',nextProps);
+    // if (nextProps.newClass) {
+    //   let datum = nextProps.newClass;
+      //this.setState({ data: [...this.state.data, datum] })
     }
   }
 
