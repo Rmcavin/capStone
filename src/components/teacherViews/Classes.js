@@ -9,8 +9,8 @@ import AddClass from './AddClass'
 class Classes extends Component {
   constructor(props) {
     super(props)
-    this.toggleAddAssignment = this.toggleAddAssignment.bind(this)
-    this.newAssignment = this.newAssignment.bind(this)
+    this.toggleAddClass = this.toggleAddClass.bind(this)
+    this.newClass = this.newClass.bind(this)
     this.state = {addClass: false, newClass: null};
   }
 
@@ -18,11 +18,11 @@ class Classes extends Component {
     console.log('updated assignments state',this.state);
   }
 
-  toggleAddAssignment() {
-    this.setState({addAssignment: !this.state.addClass})
+  toggleAddClass() {
+    this.setState({addClass: !this.state.addClass})
   }
 
-  newAssignment(newclass) {
+  newClass(newclass) {
     this.setState({newClass:newclass})
   }
 

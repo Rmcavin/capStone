@@ -7,7 +7,11 @@ class AddClass extends Component {
     super(props)
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {classname: null, subject: null};
+    this.state = {classname: null, subject: 'Science', error: null, message: null};
+  }
+
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   handleChange(event) {
@@ -18,28 +22,28 @@ class AddClass extends Component {
     event.preventDefault()
     let body = {teacher_id: this.props.user.id, classname: this.state.classname, subject: this.state.subject}
 
-    // axios({
-    //   method: 'post',
-    //   url: '/assignments/new',
-    //   data: body
-    // })
-    // .then( (res) => {
-    //   console.log(res);
-    //   if (res.data.assignmentname) {
-    //     this.props.newAssignment(res.data)
-    //     this.setState({error: null})
-    //     this.setState({message: 'Success'})
-    //   }
-    //   else {
-    //     this.setState({error: 'Invalid Entry'})
-    //   }
-    // })
+    axios({
+      method: 'post',
+      url: '/classes/new',
+      data: body
+    })
+    .then( (res) => {
+      console.log(res);
+      if (res.data.classname) {
+        this.props.newClass(res.data)
+        this.setState({error: null})
+        this.setState({message: 'Success'})
+      }
+      else {
+        this.setState({error: 'Invalid Entry'})
+      }
+    })
   }
 
 
 
   render() {
-    console.log('addclass props', this.props);
+    //console.log('addclass props', this.props);
 
     //styles
     const styles = StyleSheet.create({
@@ -75,10 +79,10 @@ class AddClass extends Component {
       <input type="text" name="classname" onChange={this.handleChange} className={css(styles.input)}/>
       <label className={css(styles.label)}>Subject:</label>
       <select name="subject" onChange={this.handleChange} className={css(styles.input)}>
-        <option value='science'>Science</option>
-        <option value='mathematics'>Mathematics</option>
-        <option value='languageArts'>Language Arts</option>
-        <option value='socialStudies'>Social Studies</option>
+        <option value='Science'>Science</option>
+        <option value='Mathematics'>Mathematics</option>
+        <option value='Language Arts'>Language Arts</option>
+        <option value='Social Studies'>Social Studies</option>
         <option value='Music'>Music</option>
         <option value='Art'>Art</option>
         <option value='PE'>Physical Education</option>
@@ -86,6 +90,7 @@ class AddClass extends Component {
       <div>
         <input type="submit" className={css(styles.submit)}/>
         <button className={css(styles.close)} onClick={this.props.toggle}>Cancel</button>
+        {this.state.error}{this.state.message}
       </div>
       </form>
     )

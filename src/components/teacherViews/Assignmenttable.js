@@ -8,7 +8,7 @@ class Assignmenttable extends Component {
   constructor(props, context) {
     super(props, context)
     this.renderEditable = this.renderEditable.bind(this)
-    this.state = {data: null, columns: null};
+    this.state = {data: null, columns: null, classMap: null};
   }
 
   componentDidUpdate() {
@@ -32,15 +32,16 @@ class Assignmenttable extends Component {
         onBlur={e => {
           const data = [...this.state.data];
           data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-          // let cellUpdate = {
-          //    student_id: cellInfo.original.student_id,
-          //    grade: cellInfo.original.grade,
-          //    name: cellInfo.original.name,
-          //    password: cellInfo.original.password,
-          //    username: cellInfo.original.username
-          //  }
-          //  console.log(cellInfo);
-          // this.sendData(cellUpdate)
+          let cellUpdate = {
+             assignmentname: cellInfo.original.name,
+             type: cellInfo.original.type,
+             assignment_id: cellInfo.original.id,
+             classname: cellInfo.column.id,
+             class_id: this.state.classMap[cellInfo.column.id],
+             value: cellInfo.original[cellInfo.column.id]
+          }
+          console.log(cellInfo);
+          this.sendData(cellUpdate)
           this.setState({ data });
         }}
         dangerouslySetInnerHTML={{
@@ -63,20 +64,20 @@ class Assignmenttable extends Component {
            el.Cell = this.renderEditable
          }
        })
-       this.setState({data: res.data.assignmentList, columns: res.data.columns})
+       this.setState({data: res.data.assignmentList, columns: res.data.columns, classMap: res.data.classMap})
      })
   }
 
-  //sendData(updates) {
-    // axios({
-    //   method: 'patch',
-    //   url: '/students',
-    //   data: updates
-    // })
-    // .then ( (res) => {
-    //   console.log(res);
-    // })
-  //}
+  sendData(updates) {
+    axios({
+      method: 'patch',
+      url: '/assignments',
+      data: updates
+    })
+    .then ( (res) => {
+      console.log(res);
+    })
+  }
 
   render() {
 

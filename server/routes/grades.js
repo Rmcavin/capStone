@@ -12,6 +12,7 @@ server.patch('/', (req, res) => {
     .where({student_id:req.body.student_id}).andWhere({assignment_id:req.body.assignment_id}).andWhere({class_id:req.body.class_id}).count('score')
     .groupBy('grades.id')
     .then((count) => {
+      console.log(count);
       if (count.length === 0) {
         return knex('grades')
         .insert({score:req.body.score, student_id:req.body.student_id, assignment_id:req.body.assignment_id, class_id:req.body.class_id, createdat: new Date()},'*')
@@ -23,7 +24,8 @@ server.patch('/', (req, res) => {
       }
     })
     .then((grades) => {
-      res.send(grades)
+      console.log(grades);
+      res.send('success')
     })
   // knex('grades')
   //   .where({student_id:req.body.student_id}).andWhere({assignment_id:req.body.assignment_id})

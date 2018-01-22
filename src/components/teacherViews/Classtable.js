@@ -16,11 +16,11 @@ class Classtable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.newClass) {
-    //   let datum = {name: nextProps.newClass.assignmentname, type: nextProps.newAssignment.type}
-    //   this.setState({ data: [...this.state.data, datum] })
-    //
-    // }
+    console.log('new props',nextProps);
+    if (nextProps.newClass) {
+      let datum = nextProps.newClass;
+      this.setState({ data: [...this.state.data, datum] })
+    }
   }
 
   renderEditable(cellInfo) {
@@ -32,15 +32,13 @@ class Classtable extends Component {
         onBlur={e => {
           const data = [...this.state.data];
           data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-          // let cellUpdate = {
-          //    student_id: cellInfo.original.student_id,
-          //    grade: cellInfo.original.grade,
-          //    name: cellInfo.original.name,
-          //    password: cellInfo.original.password,
-          //    username: cellInfo.original.username
-          //  }
-          //  console.log(cellInfo);
-          // this.sendData(cellUpdate)
+          let cellUpdate = {
+             classname: cellInfo.original.classname,
+             subject: cellInfo.original.subject,
+             class_id: cellInfo.original.id
+           }
+          console.log(cellInfo);
+          this.sendData(cellUpdate)
           this.setState({ data });
         }}
         dangerouslySetInnerHTML={{
@@ -58,20 +56,23 @@ class Classtable extends Component {
      .then( (res) => {
        console.log('class table response', res);
        let columns = [{Header:'Class Name', accessor: 'classname'}, {Header: 'Subject', accessor: 'subject'}]
+       columns.forEach( (el) => {
+           el.Cell = this.renderEditable
+         })
        this.setState({data: res.data, columns: columns})
       })
   }
 
-  //sendData(updates) {
-    // axios({
-    //   method: 'patch',
-    //   url: '/students',
-    //   data: updates
-    // })
-    // .then ( (res) => {
-    //   console.log(res);
-    // })
-  //}
+  sendData(updates) {
+    axios({
+      method: 'patch',
+      url: '/classes',
+      data: updates
+    })
+    .then ( (res) => {
+      console.log(res);
+    })
+  }
 
   render() {
 
@@ -98,12 +99,6 @@ class Classtable extends Component {
       return <div className={css(styles.loaderContainer)}><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
               <span className="sr-only">Loading...</span></div>
     }
-
-    // let toggleStudent = null;
-    //
-    // if (this.props.addStudent) {
-    //   toggleStudent = <AddStudent currentClass = {this.props.currentClass} newStudent = {this.newStudent} addStudentToggle = {this.props.addStudentToggle}/>
-    // }
 
       //data return
       if (this.state.data) {

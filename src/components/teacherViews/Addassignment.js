@@ -16,7 +16,7 @@ class Addassignment extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    let body = {teacher_id: this.props.user[0].id, assignmentname: this.state.assignmentname, assignmenttype: this.state.assignmenttype}
+    let body = {teacher_id: this.props.user.id, assignmentname: this.state.assignmentname, assignmenttype: this.state.assignmenttype}
     console.log('the data', body);
     axios({
       method: 'post',
@@ -82,6 +82,7 @@ class Addassignment extends Component {
       <div>
         <input type="submit" className={css(styles.submit)}/>
         <button className={css(styles.close)} onClick={this.props.toggle}>Cancel</button>
+        {this.state.error} {this.state.message}
       </div>
       </form>
     )
