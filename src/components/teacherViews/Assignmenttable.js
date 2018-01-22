@@ -16,7 +16,7 @@ class Assignmenttable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.newAssignment) {
+    if (nextProps.newAssignment && this.props.newAssignment !== nextProps.newAssignment)  {
       let datum = {name: nextProps.newAssignment.assignmentname, type: nextProps.newAssignment.type}
       this.setState({ data: [...this.state.data, datum] })
 
