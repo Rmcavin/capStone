@@ -8,7 +8,7 @@ This application was built by [Rachel Cavin](www.rachelcavin.com) in 2 weeks as 
 
 Teachers need better tools and resources to make doing their job efficient and effective. Scorekeeper is an early-stage product that aims to reduce the amount of time teachers spend on scoring assignments, creating and administering assessments, and monitoring student progress.
 
-### Current features
+### Current Features
 ![Gradebook](/readme_assets/gradebook.png)
 
 * Editable gradebook for updating student grades by assignment in each class.
@@ -17,7 +17,7 @@ Teachers need better tools and resources to make doing their job efficient and e
 * Student gradebook view for quick communication of grades.
 * Teacher-managed student log in credentials to ensure lost usernames and passwords can be quickly updated.
 
-### Future features
+### Future Features
 
 * Streamlined assessment and rubric creation.
 * Student assessment view for quick, paperless exams.
@@ -36,7 +36,7 @@ Teachers need better tools and resources to make doing their job efficient and e
 
 ### Technical Challenges
 
-* Database complexity: With 7 tables, dozens of joins, and many data transformations from display format to storage format and back again, this was the most challenging database I have yet to work with. Getting comfortable with this complexity took time, but ultimately I was able to figure it out with time and practice.
+* Database Complexity: With 7 tables, dozens of joins, and many data transformations from display format to storage format and back again, this was the most challenging database I have yet to work with. Getting comfortable with this complexity took time, but ultimately I was able to figure it out with time and practice.
 * React State Management: This application requires a lot of information that is passed between components. I intend to refactor the front end to use Redux for improved state management across all my components.
 * Authorization, Authentication, and Security: With two different log in options each with their own access levels, ensuring users don't have access to the wrong parts of the app was critical. Security is an ongoing challenge given the sensitivity of student data and an area that will continue to improve.
 
