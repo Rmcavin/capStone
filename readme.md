@@ -2,11 +2,11 @@
 
 # Scorekeeper, a streamlined assessment and scoring application for teachers.
 
-This application was built by Rachel Cavin in 2 weeks as her capstone project for the Galvanize Web Development Immersive Course.
+This application was built by [Rachel Cavin](http://www.rachelcavin.com/) in 2 weeks as her capstone project for the Galvanize Web Development Immersive Course.
 
 ### Within 5 years, 40-50% of teachers leave the industry.
 
-Teachers need better tools and resources to make doing their job efficient and effective. Scorekeeper is an early-stage product that aims to reduce the amount of time teachers spend on scoring assignments, creating and administering assessments, and monitoring student progress.
+Teachers need better tools and resources to make doing their job efficient and effective. Scorekeeper aims to reduce the amount of time teachers spend on scoring assignments, creating and administering assessments, and monitoring student progress.
 
 ### Current Features
 ![Gradebook](/readme_assets/gradebook.png)
@@ -43,3 +43,4 @@ Teachers need better tools and resources to make doing their job efficient and e
 ### Technical Demo
 
 [Demo Video](https://www.youtube.com/watch?v=wfKgLxQ-SqE)
+[Live Demo](https://cavin-capstone.herokuapp.com/)
