@@ -10,10 +10,6 @@ class AddClass extends Component {
     this.state = {classname: null, subject: 'Science', error: null, message: null};
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
-
   handleChange(event) {
     this.setState({[event.target.name]:event.target.value});
   }
@@ -28,7 +24,7 @@ class AddClass extends Component {
       data: body
     })
     .then( (res) => {
-      console.log(res);
+      
       if (res.data.classname) {
         this.props.newClass(res.data)
         this.setState({error: null})

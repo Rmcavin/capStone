@@ -2,7 +2,7 @@
 
 # Scorekeeper, a streamlined assessment and scoring application for teachers.
 
-This application was built by [Rachel Cavin](www.rachelcavin.com) in 2 weeks as her capstone project for the Galvanize Web Development Immersive Course.
+This application was built by Rachel Cavin in 2 weeks as her capstone project for the Galvanize Web Development Immersive Course.
 
 ### Within 5 years, 40-50% of teachers leave the industry.
 

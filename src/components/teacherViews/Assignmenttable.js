@@ -12,7 +12,7 @@ class Assignmenttable extends Component {
   }
 
   componentDidUpdate() {
-    console.log('assignmenttable state', this.state);
+    //console.log('assignmenttable state', this.state);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,7 +40,6 @@ class Assignmenttable extends Component {
              class_id: this.state.classMap[cellInfo.column.id],
              value: cellInfo.original[cellInfo.column.id]
           }
-          console.log(cellInfo);
           this.sendData(cellUpdate)
           this.setState({ data });
         }}
@@ -52,13 +51,11 @@ class Assignmenttable extends Component {
   }
 
   getData() {
-    console.log('getting the assignments!');
     axios({
       method: 'get',
       url: `/teachers/${this.props.user.id}/assignments`
     })
     .then( (res) => {
-      console.log('the assignments from db', res);
        res.data.columns.forEach( (el) => {
          if (el.Header !== 'Type') {
            el.Cell = this.renderEditable
@@ -75,7 +72,7 @@ class Assignmenttable extends Component {
       data: updates
     })
     .then ( (res) => {
-      console.log(res);
+      //console.log(res);
     })
   }
 

@@ -14,7 +14,7 @@ class Gradetable extends Component {
   }
 
   componentDidUpdate() {
-    console.log('gradetable state', this.state);
+    //console.log('gradetable state', this.state);
   }
 
   componentWillReceiveProps(nextprops) {
@@ -32,7 +32,6 @@ class Gradetable extends Component {
         onBlur={e => {
           const data = [...this.state.data];
           data[cellInfo.index][cellInfo.column.id] = parseInt(e.target.innerHTML);
-          console.log(cellInfo);
           let cellUpdate = {
             class_id: this.props.currentClass,
             student_id: cellInfo.original.student_id,
@@ -55,7 +54,7 @@ class Gradetable extends Component {
       url: `/teachers/${this.props.user.id}/classes/${currentClassID}/assignments`
     })
     .then( (res) => {
-      console.log('the grades from the server', res);
+      //console.log('the grades from the server', res);
       res.data.columns.forEach( (el) => {
         if (el.Header !== 'name') {
           el.Cell = this.renderEditable
@@ -72,7 +71,7 @@ class Gradetable extends Component {
       data: updates
     })
     .then ( (res) => {
-      console.log(res);
+      //console.log(res);
     })
   }
 
@@ -97,7 +96,6 @@ class Gradetable extends Component {
     //if there is no data
     if (currentClassID && !data) {
       //get the data
-      console.log('making axios call for data');
       this.getData(currentClassID)
 
       return <div className={css(styles.loaderContainer)}><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>

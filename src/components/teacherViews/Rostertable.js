@@ -17,7 +17,7 @@ class Rostertable extends Component {
   }
 
   componentDidUpdate() {
-    console.log('rostertable state', this.state);
+    //console.log('rostertable state', this.state);
   }
 
   componentWillReceiveProps(nextprops) {
@@ -42,7 +42,6 @@ class Rostertable extends Component {
              password: cellInfo.original.password,
              username: cellInfo.original.username
            }
-           console.log(cellInfo);
           this.sendData(cellUpdate)
           this.setState({ data });
         }}
@@ -73,7 +72,6 @@ class Rostertable extends Component {
       data: updates
     })
     .then ( (res) => {
-      console.log(res);
     })
   }
 

@@ -13,7 +13,7 @@ class Studenttable extends Component {
   }
 
   componentDidUpdate() {
-    console.log('datatable state', this.state);
+    //console.log('datatable state', this.state);
   }
 
   componentWillReceiveProps(nextprops) {
@@ -22,30 +22,7 @@ class Studenttable extends Component {
     }
   }
 
-  // renderEditable(cellInfo) {
-  //   return (
-  //     <div
-  //       style={{ backgroundColor: "#fafafa" }}
-  //       contentEditable
-  //       suppressContentEditableWarning
-  //       onBlur={e => {
-  //         const data = [...this.state.data];
-  //         data[cellInfo.index][cellInfo.column.id] = parseInt(e.target.innerHTML);
-  //         let cellUpdate = {
-  //           student_id: cellInfo.original.studentId,
-  //           assignment_id: this.state.key[cellInfo.column.id],
-  //           score: cellInfo.original[cellInfo.column.id]
-  //         }
-  //         console.log('the cell update', cellUpdate);
-  //         this.sendData(cellUpdate)
-  //         this.setState({ data });
-  //       }}
-  //       dangerouslySetInnerHTML={{
-  //         __html: this.state.data[cellInfo.index][cellInfo.column.id]
-  //       }}
-  //     />
-  //   );
-  // }
+
 
   getData(currentClassID) {
     axios({
@@ -53,7 +30,7 @@ class Studenttable extends Component {
       url: `/students/${this.props.user.id}/classes/${currentClassID}/assignments`
     })
     .then( (res) => {
-      console.log('data from db', res);
+    //  console.log('data from db', res);
       // res.data.columns.forEach( (el) => {
       //   if (el.Header !== 'name') {
       //     el.Cell = this.renderEditable
@@ -95,7 +72,6 @@ class Studenttable extends Component {
     //if there is no data
     if (currentClassID && !data) {
       //get the data
-      console.log('making axios call for data');
       this.getData(currentClassID)
 
       return <div className={css(styles.loaderContainer)}><i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>

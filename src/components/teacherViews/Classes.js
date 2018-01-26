@@ -15,7 +15,7 @@ class Classes extends Component {
   }
 
   componentDidUpdate() {
-    console.log('updated assignments state',this.state);
+    //console.log('updated assignments state',this.state);
   }
 
   toggleAddClass() {

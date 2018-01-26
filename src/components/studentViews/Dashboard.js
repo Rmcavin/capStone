@@ -14,20 +14,18 @@ class Dashboard extends Component {
 
   getData() {
     if (this.props.user && !this.state.classes) {
-      console.log(this.props.user.id);
       axios({
         method: 'get',
         url: `/students/${this.props.user.id}/classes`
       })
       .then( (res) => {
-        console.log('the res',res);
         this.setState({classes: res.data})
       })
     }
   }
 
   componentDidUpdate() {
-    console.log('updated dashboard state',this.state);
+    //console.log('updated dashboard state',this.state);
   }
 
   createOptions() {
@@ -44,7 +42,7 @@ class Dashboard extends Component {
 
   render() {
     //get the classes if they don't exist yet
-    console.log('props?', this.props.user);
+    //console.log('props?', this.props.user);
     if (this.props.user && this.state.classes === null) {
       this.getData()
     }

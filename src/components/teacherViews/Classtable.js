@@ -12,7 +12,7 @@ class Classtable extends Component {
   }
 
   componentDidUpdate() {
-    console.log('classtable state', this.state);
+    //console.log('classtable state', this.state);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,7 +36,6 @@ class Classtable extends Component {
              subject: cellInfo.original.subject,
              class_id: cellInfo.original.id
            }
-          console.log(cellInfo);
           this.sendData(cellUpdate)
           this.setState({ data });
         }}
@@ -53,7 +52,6 @@ class Classtable extends Component {
        url: `/teachers/${this.props.user.id}/classes`
      })
      .then( (res) => {
-       console.log('class table response', res);
        let columns = [{Header:'Class Name', accessor: 'classname'}, {Header: 'Subject', accessor: 'subject'}]
        columns.forEach( (el) => {
            el.Cell = this.renderEditable
@@ -69,7 +67,7 @@ class Classtable extends Component {
       data: updates
     })
     .then ( (res) => {
-      console.log(res);
+    //  console.log(res);
     })
   }
 

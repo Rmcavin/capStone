@@ -13,7 +13,7 @@ class Roster extends Component {
   }
 
   componentDidUpdate() {
-    console.log('updated assignments state',this.state);
+    //console.log('updated assignments state',this.state);
   }
 
   componentWillReceiveProps(nextprops) {
@@ -24,7 +24,6 @@ class Roster extends Component {
   }
 
   getData() {
-    console.log('get data in classes');
     if (this.props.user && !this.state.classes) {
       axios({
         method: 'get',
@@ -37,7 +36,6 @@ class Roster extends Component {
   }
 
   createOptions() {
-    console.log('create options in classes');
     let classes = this.state.classes;
     let options = classes.map( (el) => {
       return <option value={el.id}> {el.classname} </option>
@@ -47,8 +45,7 @@ class Roster extends Component {
 
   //select and update the current class
   selectClass(event) {
-    console.log(event);
-    console.log('the event value', event.target.value);
+
     this.setState({currentClass: event.target.value});
   }
 
@@ -64,7 +61,6 @@ class Roster extends Component {
 
     let options = this.state.classes ? (this.createOptions()) : (null);
 
-    console.log('classes state at render',this.state, 'classes props at render', this.props);
 
     //styles
     const styles = StyleSheet.create({

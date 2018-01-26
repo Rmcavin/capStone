@@ -17,14 +17,12 @@ class Addassignment extends Component {
   handleSubmit(event) {
     event.preventDefault()
     let body = {teacher_id: this.props.user.id, assignmentname: this.state.assignmentname, assignmenttype: this.state.assignmenttype}
-    console.log('the data', body);
     axios({
       method: 'post',
       url: '/assignments/new',
       data: body
     })
     .then( (res) => {
-      console.log(res);
       if (res.data.assignmentname) {
         this.props.newAssignment(res.data)
         this.setState({error: null})
@@ -39,7 +37,7 @@ class Addassignment extends Component {
 
 
   render() {
-    console.log('addAssignment props', this.props);
+  //  console.log('addAssignment props', this.props);
 
     //styles
     const styles = StyleSheet.create({

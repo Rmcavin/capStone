@@ -28,9 +28,7 @@ server.post('/login', (req, res) => {
 
   //add a new student (via teacher interface)
   server.post('/new', (req, res) => {
-    console.log('adding a student',req.body);
     bcrypt.hash(req.body.password, 12, (fail,hash) => {
-      //console.log(req.body.class_id);
     return knex('students')
       .insert({
         username: req.body.username,
@@ -41,14 +39,12 @@ server.post('/login', (req, res) => {
         createdat: new Date()
       },'*')
         .then((student) => {
-          console.log('student?', student);
           return knex('students_class')
           .insert({
             student_id: student[0].id,
             class_id: parseInt(req.body.class_id)
           }, '*')
           .then((joinids) => {
-            console.log('result?',student);
             res.send(student[0])
           })
           .catch((err) => {
@@ -63,24 +59,21 @@ server.post('/login', (req, res) => {
 
   //get the classes a student is in
   server.get('/:id/classes', (req, res) => {
-    console.log('hello?');
     knex('students')
       .where({'students.id':req.params.id})
       .innerJoin('students_class', 'students.id', 'students_class.student_id')
       .innerJoin('classes', 'students_class.class_id', 'classes.id')
       .then( (classes) => {
-        console.log(classes);
         res.send(classes)
       })
       .catch( (err) => {
-        console.log(err);
+        //console.log(err);
         res.send(err)
       })
   })
 
   //get the students grades in a class
   server.get('/:id/classes/:classid/assignments', (req, res) => {
-    console.log('hello???');
     knex('grades')
       .where({'class_id':req.params.classid})
       .andWhere({'student_id':req.params.id})
@@ -94,7 +87,6 @@ server.post('/login', (req, res) => {
 
   //update a student record
   server.patch('/', (req, res) => {
-    console.log(req);
     let fullName = req.body.name.split(' ');
     let firstname = fullName[0];
     let lastname = fullName[1];
@@ -110,7 +102,6 @@ server.post('/login', (req, res) => {
           updatedat: new Date()
         })
         .then( (res) => {
-          console.log('the res', res);
           res.end()
         })
       .catch( (err) => {
@@ -120,7 +111,6 @@ server.post('/login', (req, res) => {
   })
 
   function processGrades(grades) {
-    console.log('raw grades', grades);
     let result = {columns:[{Header:'Assignment', accessor:'assignment'}, {Header:'Score', accessor:'score'}]};
     let processedData = [];
     let entry = {};

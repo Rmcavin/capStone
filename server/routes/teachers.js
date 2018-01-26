@@ -58,7 +58,7 @@ server.post('/login', (req, res) => {
       )}
     })
     .catch( (err) => {
-      console.error(err)
+      //console.error(err)
     })
 })
 
@@ -117,19 +117,6 @@ server.get('/:id/classes', (req, res) => {
           let result = {gradeData:gradeData, columns:columns, key:key}
           res.send(result)
         })
-      // knex('grades')
-      //   .select('*')
-      //   .where({'class_id':classid})
-      //   .innerJoin('assignments', 'grades.assignment_id', 'assignments.id')
-      //   .innerJoin('students', 'grades.student_id', 'students.id')
-      //   .then( (studentGrades) => {
-      //     let gradeData = processGrades(studentGrades);
-      //     let columns = getColumns(studentGrades);
-      //     let key = assignmentKey(studentGrades);
-      //     let result = {columns: columns, grades: gradeData, key: key};
-      //
-      //     res.send(result)
-        //})
       .catch( (err) => {
         res.send(err)
       })
@@ -168,7 +155,6 @@ server.get('/:id/classes', (req, res) => {
           .where({'classes.teacher_id': teacherid})
           .then((classes) => {
             let result = processAssignments(assignments, classes);
-            console.log('the assignments result',result);
             res.send(result)
           })
 
@@ -190,9 +176,6 @@ server.get('/:id/classes', (req, res) => {
       if (el.class_id) {
         assignmentMap[el.id].classes[el.classname] = moment(el.due_date).format('M/D/YYYY');
       }
-      // if (classList.indexOf(el.classname) === -1 && el.classname !== null) {
-      //   classList.push(el.classname);
-      // }
     })
 
     classes.forEach((el) => {
@@ -247,9 +230,9 @@ server.get('/:id/classes', (req, res) => {
     let count = grades.length;
 
     grades.forEach( (el) => {
-      //console.log(el);
+
       let fullName = `${el.firstname} ${el.lastname}`
-      //console.log(fullName);
+
 
       if (!key[el.id]) {
         key[el.id] = {student_id:el.id, name: fullName, [`${el.assignmentname}`]:el.score}
@@ -258,25 +241,7 @@ server.get('/:id/classes', (req, res) => {
         key[el.id][el.assignmentname] = el.score;
       }
 
-      //console.log(key);
-
-      //if there is no fullname, set it
-      // if (!entry.name) {
-      //   entry.name = fullName
-      //   entry.studentId = el.student_id;
-      // }
-      // if (entry.name !== fullName) {
-      //   processedData.push(entry)
-      //   entry = {}
-      //   entry.name = fullName;
-      //   entry.studentId = el.student_id;
-      // }
-      // entry[el.assignmentname] = el.score;
-      // count -= 1;
-      // //if this is the last entry push it now
-      // if (count === 0) {
-      //   processedData.push(entry)
-      // }
+      
     })
     processedData = Object.values(key)
 
