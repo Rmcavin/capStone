@@ -8,6 +8,12 @@ This application was built by [Rachel Cavin](http://www.rachelcavin.com/) in 2 w
 
 Teachers need better tools and resources to make doing their job efficient and effective. Scorekeeper aims to reduce the amount of time teachers spend on scoring assignments, creating and administering assessments, and monitoring student progress.
 
+### Technical Demo
+
+[Demo Video](https://www.youtube.com/watch?v=wfKgLxQ-SqE)
+
+[Live Demo](https://cavin-capstone.herokuapp.com/)
+
 ### Current Features
 ![Gradebook](/readme_assets/gradebook.png)
 
@@ -39,9 +45,3 @@ Teachers need better tools and resources to make doing their job efficient and e
 * Database Complexity: With 7 tables, dozens of joins, and many data transformations from display format to storage format and back again, this was the most challenging database I have yet to work with. Getting comfortable with this complexity took time, but ultimately I was able to figure it out with time and practice.
 * React State Management: This application requires a lot of information that is passed between components. I intend to refactor the front end to use Redux for improved state management across all my components.
 * Authorization, Authentication, and Security: With two different log in options each with their own access levels, ensuring users don't have access to the wrong parts of the app was critical. Security is an ongoing challenge given the sensitivity of student data and an area that will continue to improve.
-
-### Technical Demo
-
-[Demo Video](https://www.youtube.com/watch?v=wfKgLxQ-SqE)
-
-[Live Demo](https://cavin-capstone.herokuapp.com/)
